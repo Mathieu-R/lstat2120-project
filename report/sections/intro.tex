@@ -1,0 +1,11 @@
+\section{Introduction}
+
+We are working with a dataset containing different \textit{health factors} collected from \textbf{WHO} (World Health Organization) as well as \textit{economic factors} collected from \textbf{ONU} for almost every countries in the world and years between $2000$ and $2015$. Some countries are not present in this dataset because they had too much missing data. 
+
+Since we are dealing with panel data, we chose to only work with data from the year $2012$. We removed observations with missing values and we modifies the `adult mortality` continuous variable into a qualitative variable. So the final dataset has $???$ \textbf{observations} and $20$ \textbf{variables}. For our analysis, we separates the dataset into a training set and a testing set containing respectively $80\%$ and $20\%$ of the observations. This separation is random (\textit{i.e. the dataset is shuffled before separating it}).
+
+\section{Research question}
+We want to understand how different factors affect positively or negatively the life expectancy. We would like to be able to predict the mean life expectancy (response variable: \textit{life.expectancy}) for a given country based on different health, economic and social factors.
+
+Firstly, we will start by doing an descriptive analysis of the different variables. Then we will try different linear models and select the best one based on different relevant criterions. We will check if the classical hypothesis are respected as well as nonlinearity, influential observations. If some hypotheses are not respected, we will fix that.
+We will finish by making prediction on a testing set with our model.

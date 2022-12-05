@@ -1,0 +1,570 @@
+---
+title: "Life Expectancy - Linear Model"
+author: "Mathieu"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(comment = "")
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+## Importing dataset
+```{r}
+library(tidyverse)
+
+# color palettes
+library(hrbrthemes)
+library(viridis)   
+
+# train-test split
+library(rsample) 
+
+# tables
+library(formattable)
+library(huxtable)
+library(gt)
+
+# skewness,...
+library(moments)
+library(patchwork)
+
+# correlation
+library(corrplot)
+
+# string manipulation
+library(stringr)
+
+# vif test
+library(car)
+
+# lasso model selection
+library(glmnet)
+library(olsrr)
+
+# better summary for linear models
+library(broom)
+
+# test for heteroskedasticity
+library(lmtest)
+
+# test for normality of the residuals
+library(tseries)
+```
+
+
+```{r}
+# clear variables
+rm(list = ls())
+
+df <- read.csv("dataset/life-expectancy-2012.csv", sep = ",", dec = ".", header = TRUE)
+
+# convert status and adult.mortality to factor (gives an order to categorical variable)
+df$status <- factor(df$status, levels = c("Developing", "Developed"))
+df$adult.mortality <- factor(df$adult.mortality, levels = c("very low", "low", "middle", "high", "very high"))
+
+df <- df %>%
+  dplyr::select(-country)
+
+glimpse(df)
+```
+
+### Exploratory Data Analysis
+
+#### Qualitative variables
+
+```{r}
+par(mfrow = c(1, 2))
+
+table(df$status)
+
+status_percentage <- prop.table(table(df$status))
+status_plot <- barplot(status_percentage, col = "#3F6D9B", ylab = "Percentage", main = "Status of countries")
+
+adult_mortality_percentage <- prop.table(table(df$adult.mortality))
+adult_mortality_plot <- barplot(adult_mortality_percentage, col = "#3F6D9B", ylab = "Percentage", main = "Adult mortality")
+```
+
+#### Quantitative variables
+
+```{r out.width="80%"}
+compute_moments_feature <- function(feature_name, feature_data, decimals = 2) {
+  summary_feature <- data.frame(
+    variable = feature_name,
+    mean = round(mean(feature_data), decimals),
+    std_dev = round(sd(feature_data), decimals),
+    skewness = round(skewness(feature_data), decimals),
+    kurtosis = round(kurtosis(feature_data), decimals)
+  )
+  return(summary_feature)
+}
+
+summary_moments <- function(df) {
+  summary <- c()
+  for (feature in colnames(df)) {
+    summary <- bind_rows(summary, compute_moments_feature(feature, df[[feature]]))
+  }
+  return(summary)
+}
+
+df %>%
+  dplyr::select_if(is.numeric) %>%
+  summary_moments %>%
+  gt %>%
+  tab_header(
+    title = "4 moments of quantitative variables"
+  ) %>%
+  gtsave("test.png", expand = 10)
+```
+
+```{r}
+df_economics <- df %>%
+  dplyr::select(c(percentage.expenditure, total.expenditure, gdp, income.composition.of.resources))
+
+df_socials <- df %>%
+  dplyr::select(c(population, schooling))
+
+df_mortality <- df %>%
+  dplyr::select(c(infant.deaths, hiv.aids, thinness.5.9.years, thinness.10.19.years))
+
+df_immunization <- df %>%
+  dplyr::select(c(hepatitis.b, measles, polio, diphtheria))
+
+df_other <- df %>%
+  dplyr::select(c(alcohol, bmi))
+```
+
+```{r}
+scatter_plot2 <- function(df, x, y) {
+  ggplot(df, aes({{x}})) +
+    geom_histogram()
+}
+
+scatter_plot2(df, bmi, gdp)
+```
+
+```{r}
+histplot <- function(df, feature) {
+  ggplot(df, aes({{feature}})) +
+    geom_histogram(color = "#FFFFFF", fill = "#3F6D9B") +
+    labs(x = "", y = "Count") +
+    ggtitle(rlang::englue("{{feature}}")) +
+    theme_classic()
+}
+
+bplot <- function(df, feature) {
+  ggplot(df, aes(x = 1, y = {{feature}})) +
+    geom_boxplot() +
+    stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") +
+    scale_x_continuous(breaks = NULL) +
+    theme(axis.title.x = element_blank()) +
+    theme_minimal()
+}
+```
+
+```{r}
+gridExtra::grid.arrange(histplot(df, life.expectancy), bplot(df, life.expectancy), nrow = 1)
+```
+
+```{r}
+gridExtra::grid.arrange(
+  histplot(df, percentage.expenditure), 
+  histplot(df, total.expenditure),
+  histplot(df, gdp),
+  histplot(df, income.composition.of.resources),
+  nrow = 2, ncol = 2
+)
+
+gridExtra::grid.arrange(
+  bplot(df, percentage.expenditure), 
+  bplot(df, total.expenditure),
+  bplot(df, gdp),
+  bplot(df, income.composition.of.resources),
+  nrow = 2, ncol = 2
+)
+```
+
+
+```{r}
+gridExtra::grid.arrange(
+  histplot(df, population), 
+  histplot(df, schooling),
+  bplot(df, population), 
+  bplot(df, schooling),
+  nrow = 2, ncol = 2
+)
+```
+
+```{r}
+gridExtra::grid.arrange(
+  histplot(df, infant.deaths),
+  histplot(df, hiv.aids),
+  histplot(df, thinness.5.9.years),
+  histplot(df, thinness.10.19.years),
+  nrow = 2, ncol = 2
+)
+
+gridExtra::grid.arrange(
+  bplot(df, infant.deaths),
+  bplot(df, hiv.aids),
+  bplot(df, thinness.5.9.years),
+  bplot(df, thinness.10.19.years),
+  nrow = 2, ncol = 2
+)
+```
+
+```{r}
+gridExtra::grid.arrange(
+  histplot(df, hepatitis.b), 
+  histplot(df, measles),
+  histplot(df, polio),
+  histplot(df, diphtheria),
+  nrow = 2, ncol = 2
+)
+
+gridExtra::grid.arrange(
+  bplot(df, hepatitis.b), 
+  bplot(df, measles),
+  bplot(df, polio),
+  bplot(df, diphtheria),
+  nrow = 2, ncol = 2
+)
+```
+
+```{r}
+gridExtra::grid.arrange(
+  histplot(df, alcohol), 
+  histplot(df, bmi),
+  bplot(df, alcohol), 
+  bplot(df, bmi),
+  nrow = 2, ncol = 2
+)
+```
+
+
+
+#### Correlation matrix
+
+```{r}
+corr_matrix <- cor(keep(df, is.numeric))
+corrplot(
+  corr_matrix, 
+  method = "shade", 
+  shade.col = NA, 
+  number.cex = 0.3,
+  tl.col = "black", 
+  tl.src = 90,
+  tl.cex = 0.7,
+  addCoef.col = "black", 
+  order = "hclust"
+)
+```
+Let's do some cleaning after interpreting our correlation plot
+```{r}
+df <- df %>%
+  dplyr::select(-under.five.deaths)
+```
+
+### Model selection
+
+We convert categorical variables into dummies variables (one-hot-encoding)
+```{r}
+one_hot_encoding = function(df, columns){
+  # create a copy of the original data.frame for not modifying the original
+  df = cbind(df)
+  # convert the columns to vector in case it is a string
+  columns = c(columns)
+  # for each variable perform the One hot encoding
+  for (column in columns){
+    unique_values = sort(unique(df[column])[,column])
+    non_reference_values  = unique_values[c(-1)] # the first element is going 
+                                                 # to be the reference by default
+    for (value in non_reference_values){
+      # the new dummy column name
+      new_col_name = paste0(column, '.', str_replace_all(tolower(value), " ", "_"))
+      # create new dummy column for each value of the non_reference_values
+      df[new_col_name] <- with(df, ifelse(df[,column] == value, 1, 0))
+    }
+    # delete the one hot encoded column
+    df[column] = NULL
+
+  }
+  return(df)
+}
+
+df_one_hot <- df
+
+#df_one_hot <- df_one_hot %>%
+#  mutate(developed = ifelse(df_one_hot$status == "Developed", 1, 0)) %>%
+#  select(-status)
+
+df_one_hot <- one_hot_encoding(df_one_hot, c("status", "adult.mortality"))
+
+head(df_one_hot)
+```
+
+```{r}
+corr_matrix <- cor(keep(df_one_hot, is.numeric))
+corrplot(
+  corr_matrix, 
+  method = "shade", 
+  shade.col = NA, 
+  number.cex = 0.3,
+  tl.col = "black", 
+  tl.src = 90,
+  tl.cex = 0.7,
+  addCoef.col = "black", 
+  order = "hclust"
+)
+```
+
+
+Let's split dataset into 80-20
+```{r}
+set.seed(123)
+
+split <- initial_split(df_one_hot, prop = 0.8)
+df_train <- training(split)
+df_test <- testing(split)
+
+head(df_train)
+```
+
+#### Multicollinearity
+
+```{r}
+full_lm <- lm(life.expectancy ~ ., data = df_train)
+
+var_inf_factor = ols_vif_tol(full_lm)
+var_inf_factor_table = within(var_inf_factor, {
+  Tolerance = round(Tolerance, 2)
+  VIF = round(VIF, 2)
+})
+
+gt(var_inf_factor_table) %>%
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "full model") %>%
+  gtsave("report/figures/vif_full_model.png")
+```
+
+```{r}
+#df_train <- df_train %>%
+#  dplyr::select(-c(gdp, income.composition.of.resources))
+
+#df_test <- df_test %>%
+#  dplyr::select(-c(gdp, income.composition.of.resources))
+```
+
+#### Cp Mallow
+```{r}
+full_lm <- lm(life.expectancy ~ ., data = df_train)
+``` 
+
+#### Forward stepwise selection
+
+```{r}
+model_comparison_table <- function(model, name) {
+  model_summary <- glance(model)
+  
+  return(data.frame(
+    Model = name,
+    Number_of_variables = length(tidy(model)$term) - 1,
+    AIC = round(model_summary$AIC, 2),
+    BIC = round(model_summary$BIC, 2), 
+    Residuals_deviance = round(model_summary$deviance, 2),
+    Adj_R2 = round(model_summary$adj.r.squared, 2)
+  ))
+}
+
+get_model_formula <- function(model) {
+  explanatory_variables <- tidy(model)$term[!tidy(model)$term == "(Intercept)"]
+  paste("life.expectancy ~", paste(explanatory_variables, collapse = "+"))
+}
+```
+
+```{r}
+full_lm <- lm(life.expectancy ~ ., data = df_train)
+intercept_only <- lm(life.expectancy ~ 1, data = df_train)
+
+# direction = "forward" => forward selection ; direction = "backward" => backward selection 
+# direction = "both" => forward or backward stepwise selection (forward and backward is chosen with scope parameter)
+
+# k = 2 => use AIC criterion (tendancy too select too much variables and overfit)
+forward_stepwise_aic_lm <- step(
+  intercept_only,
+  direction = "both", 
+  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .),
+  k = 2
+)
+
+backward_stepwise_aic_lm <- step(
+  full_lm, 
+  direction = "both", 
+  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
+  k = 2,
+  trace = 0
+)
+
+# k = log(n) => use BIC criterion (penalize more but can underfit)
+forward_stepwise_bic_lm <- step(
+  intercept_only,
+  direction = "both", 
+  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
+  k = log(nrow(df_train)),
+  trace = 0
+)
+
+backward_stepwise_bic_lm <- step(
+  full_lm, 
+  direction = "both", 
+  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
+  k = log(nrow(df_train)),
+  trace = 0
+)
+
+full_model_summary <- model_comparison_table(full_lm, "Full model")
+forward_stepwise_aic_summary <- model_comparison_table(forward_stepwise_aic_lm, "Forward stepwise AIC")
+backward_stepwise_aic_summary <- model_comparison_table(backward_stepwise_aic_lm, "Backward stepwise AIC")
+forward_stepwise_aic_summary <- model_comparison_table(forward_stepwise_aic_lm, "Forward stepwise AIC")
+backward_stepwise_bic_summary <- model_comparison_table(backward_stepwise_bic_lm, "Backward stepwise BIC")
+```
+
+#### LASSO 
+
+```{r}
+response <- df_train$life.expectancy
+explanatory <- df_train %>% 
+  dplyr::select(-life.expectancy)
+
+# alpha = 1 => LASSO (note: alpha = 0 => ridge regression)
+# perform k-fold with k = 10 to select the best lambda (that minimises MSE)
+cv_model <- cv.glmnet(x = as.matrix(explanatory), y = response, alpha = 1)
+
+best_lambda <- cv_model$lambda.min
+lasso <- glmnet(x = explanatory, y = response, alpha = 1, lambda = best_lambda)
+
+lasso_formula <- get_model_formula(lasso)
+
+lasso_lm <- lm(lasso_formula, data = df_train)
+lasso_summary <- model_comparison_table(lasso_lm, "LASSO")
+```
+
+```{r}
+model_selection_table <- rbind(full_model_summary, forward_stepwise_aic_summary, backward_stepwise_aic_summary, forward_stepwise_aic_summary, backward_stepwise_bic_summary, lasso_summary)
+gt(model_selection_table)
+```
+
+#### Interactions with variables
+
+```{r}
+chosen_model_formula <- get_model_formula(backward_stepwise_aic_lm)
+
+model1 <- lm(paste(chosen_model_formula, "+ infant.deaths * measles"), data = df_train)
+model2 <- lm(paste(chosen_model_formula, "+ adult.mortality.high * alcohol"), data = df_train)
+model3 <- lm(paste(chosen_model_formula, "+ adult.mortality.very_high * alcohol"), data = df_train)
+model4 <- lm(paste(chosen_model_formula, "+ total.expenditure * adult.mortality.low"), data = df_train)
+model5 <- lm(paste(chosen_model_formula, "+ total.expenditure * infant.deaths"), data = df_train)
+model6 <- lm(paste(chosen_model_formula, "+ percentage.expenditure * diphtheria"), data = df_train)
+
+interaction_table <- rbind(
+  backward_stepwise_aic_summary,
+  model_comparison_table(model1, "infant.deaths * measles"),
+  model_comparison_table(model2, "adult.mortality.high * alcohol"),
+  model_comparison_table(model3, "adult.mortality.very_high * alcohol"),
+  model_comparison_table(model4, "total.expenditure * adult.mortality.low"),
+  model_comparison_table(model5, "total.expenditure * infant.deaths"),
+  model_comparison_table(model6, "percentage.expenditure * diphtheria")
+)
+
+gt(interaction_table)
+```
+
+```{r}
+final_lm <- model5
+```
+
+#### Nonlinearity
+```{r}
+final_lm_variables <- tidy(final_lm)$term
+print(final_lm_variables[0:-1])
+
+scplot_residuals_variable <- function(model, variable) {
+  ggplot(augment(model), aes({{variable}}, y = .resid)) +
+    geom_point() +
+    labs(x = rlang::englue("{{variable}}"), y = "residuals") +
+    theme_minimal()
+}
+
+gridExtra::grid.arrange(
+  scplot_residuals_variable(final_lm, total.expenditure),
+  scplot_residuals_variable(final_lm, hiv.aids),
+  scplot_residuals_variable(final_lm, income.composition.of.resources),
+  scplot_residuals_variable(final_lm, adult.mortality.low),
+  scplot_residuals_variable(final_lm, adult.mortality.middle),
+  scplot_residuals_variable(final_lm, adult.mortality.very_high),
+  scplot_residuals_variable(final_lm, infant.deaths),
+  ncol = 3
+)
+
+gridExtra::grid.arrange(
+  scplot_residuals_variable(final_lm, log(hiv.aids))
+)
+```
+
+#### Outliers and influential observations
+```{r}
+#X <- as.matrix(df_train[, final_lm_explanatory_variables])
+
+#H <- X %*% solve(t(X) %*% X) %*% t(X)
+
+n <- row(df_train)
+p <- length(final_lm$coefficients) - 1
+
+# diagonal of the hat matrix
+h_ii <- lm.influence(final_lm)$hat
+outliers_criterion <- 2 * p / n
+influencial_criterion <- 2 * sqrt(p / n)
+
+dffits <- dffits(final_lm)
+
+which(h_ii > outliers_criterion)
+which(abs(dffits) > influencial_criterion)
+
+plot(dffits, type = "h")
+abline(h = influencial_criterion, lty = 2)
+abline(h = -influencial_criterion, lty = 2)
+```
+
+#### Multicollinearity
+```{r}
+var_inf_factor_final_lm = ols_vif_tol(final_lm)
+var_inf_factor_table_final_lm = within(var_inf_factor_final_lm, {
+  Tolerance = round(Tolerance, 2)
+  VIF = round(VIF, 2)
+})
+
+gt(var_inf_factor_table_final_lm) %>%
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "final model") %>%
+  gtsave("report/figures/vif_final_model.png")
+```
+
+#### Heteroskedasticity
+```{r}
+#ols_test_breusch_pagan(final_lm, rhs = T, multiple=T)
+bptest(final_lm, data = df_train)
+```
+
+#### Autocorrelation
+```{r}
+bgtest(final_lm, order = 8)
+```
+
+#### Normality of the residuals
+```{r}
+qqnorm(final_lm$residuals, pch = 1, frame = FALSE)
+qqline(final_lm$residuals, lwd = 2)
+
+jarque.bera.test(final_lm$residuals)
+```
