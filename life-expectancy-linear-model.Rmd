@@ -53,6 +53,9 @@ library(lmtest)
 
 # test for normality of the residuals
 library(tseries)
+
+# standardized (= studentized) deleted residuals
+library(MASS)
 ```
 
 
@@ -116,8 +119,8 @@ df %>%
   gt %>%
   tab_header(
     title = "4 moments of quantitative variables"
-  ) %>%
-  gtsave("test.png", expand = 10)
+  ) #%>%
+  #gtsave("report/figures/quantitative_variable_moments.png", expand = 10)
 ```
 
 ```{r}
@@ -344,9 +347,52 @@ var_inf_factor_table = within(var_inf_factor, {
   VIF = round(VIF, 2)
 })
 
+round(mean(var_inf_factor$VIF), 2)
+
 gt(var_inf_factor_table) %>%
-  tab_header(title = "Variation inflation factor (VIF)", subtitle = "full model") %>%
-  gtsave("report/figures/vif_full_model.png")
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "full model") #%>%
+  #gtsave("report/figures/vif_full_model.png")
+
+new_df <- df_train %>%
+  dplyr::select(-c(gdp, income.composition.of.resources))
+
+new_lm <- lm(life.expectancy ~ ., data = new_df)
+  
+var_inf_factor = ols_vif_tol(new_lm)
+var_inf_factor_table = within(var_inf_factor, {
+  Tolerance = round(Tolerance, 2)
+  VIF = round(VIF, 2)
+})
+
+round(mean(var_inf_factor$VIF), 2)
+
+gt(var_inf_factor_table) %>%
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "new model")
+```
+
+```{r}
+get_model_formula <- function(model) {
+  explanatory_variables <- tidy(model)$term[!tidy(model)$term == "(Intercept)"]
+  paste("life.expectancy ~", paste(explanatory_variables, collapse = "+"))
+}
+```
+
+```{r}
+response <- df_train$life.expectancy
+explanatory <- df_train %>% 
+  dplyr::select(-life.expectancy)
+
+# k-fold cross-validation to find optimal lambda value (kappa in lecture notes)
+cv_model <- cv.glmnet(x = as.matrix(explanatory), y = response, alpha = 0)
+#plot(cv_model)
+
+best_lambda <- cv_model$lambda.min
+ridge <- glmnet(x = explanatory, y = response, alpha = 0, lambda = best_lambda)
+
+ridge_formula <- get_model_formula(ridge)
+
+ridge_lm <- lm(ridge_formula, data = df_train)
+#ridge_summary <- model_comparison_table(ridge_lm, "RIDGE")
 ```
 
 ```{r}
@@ -359,7 +405,8 @@ gt(var_inf_factor_table) %>%
 
 #### Cp Mallow
 ```{r}
-full_lm <- lm(life.expectancy ~ ., data = df_train)
+#full_lm <- lm(life.expectancy ~ ., data = df_train)
+full_lm <- ridge_lm
 ``` 
 
 #### Forward stepwise selection
@@ -377,15 +424,10 @@ model_comparison_table <- function(model, name) {
     Adj_R2 = round(model_summary$adj.r.squared, 2)
   ))
 }
-
-get_model_formula <- function(model) {
-  explanatory_variables <- tidy(model)$term[!tidy(model)$term == "(Intercept)"]
-  paste("life.expectancy ~", paste(explanatory_variables, collapse = "+"))
-}
 ```
 
 ```{r}
-full_lm <- lm(life.expectancy ~ ., data = df_train)
+full_lm <- ridge_lm
 intercept_only <- lm(life.expectancy ~ 1, data = df_train)
 
 # direction = "forward" => forward selection ; direction = "backward" => backward selection 
@@ -507,34 +549,45 @@ gridExtra::grid.arrange(
   scplot_residuals_variable(final_lm, infant.deaths),
   ncol = 3
 )
-
-gridExtra::grid.arrange(
-  scplot_residuals_variable(final_lm, log(hiv.aids))
-)
 ```
 
 #### Outliers and influential observations
 ```{r}
-#X <- as.matrix(df_train[, final_lm_explanatory_variables])
-
-#H <- X %*% solve(t(X) %*% X) %*% t(X)
-
-n <- row(df_train)
+n <- nrow(df_train)
 p <- length(final_lm$coefficients) - 1
 
+# outliers with respect to the explanatory variables
+
+## outliers 
 # diagonal of the hat matrix
 h_ii <- lm.influence(final_lm)$hat
 outliers_criterion <- 2 * p / n
-influencial_criterion <- 2 * sqrt(p / n)
-
-dffits <- dffits(final_lm)
+outliers_criterion
 
 which(h_ii > outliers_criterion)
-which(abs(dffits) > influencial_criterion)
+length(which(h_ii > outliers_criterion))
 
-plot(dffits, type = "h")
-abline(h = influencial_criterion, lty = 2)
-abline(h = -influencial_criterion, lty = 2)
+## influentials on fitted values
+dffits <- dffits(final_lm)
+influential_fitted_criterion <- 2 * sqrt(p / n)
+influential_fitted_criterion
+
+which(abs(dffits) > influential_fitted_criterion)
+length(which(abs(dffits) > influential_fitted_criterion))
+
+plot(dffits, type = "h", xlab = "observation")
+abline(h = influential_fitted_criterion, lty = 2)
+abline(h = -influential_fitted_criterion, lty = 2)
+
+## influentials on regression coefficients
+cooks <- cooks.distance(final_lm)
+plot(cooks, xlab = "observations")
+abline(h = 4/n, lty = 2, col = "steelblue")
+
+# outliers with respect to the response variable 
+di_ast <- studres(final_lm)
+student_quantile <- qt(0.975, df = n - p - 1)
+which(di_ast > student_quantile)
 ```
 
 #### Multicollinearity
@@ -545,12 +598,38 @@ var_inf_factor_table_final_lm = within(var_inf_factor_final_lm, {
   VIF = round(VIF, 2)
 })
 
+round(mean(var_inf_factor$VIF), 2)
+
 gt(var_inf_factor_table_final_lm) %>%
-  tab_header(title = "Variation inflation factor (VIF)", subtitle = "final model") %>%
-  gtsave("report/figures/vif_final_model.png")
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "final model") #%>%
+  #gtsave("report/figures/vif_final_model.png")
 ```
 
 #### Heteroskedasticity
+
+```{r}
+final_lm_variables <- tidy(final_lm)$term
+print(final_lm_variables[0:-1])
+
+scplot_residuals_fitted <- function(model, variable) {
+  ggplot(augment(model), aes({{variable}}, y = .fitted)) +
+    geom_point() +
+    labs(x = rlang::englue("{{variable}}"), y = "fitted") +
+    theme_minimal()
+}
+
+gridExtra::grid.arrange(
+  scplot_residuals_fitted(final_lm, total.expenditure),
+  scplot_residuals_fitted(final_lm, hiv.aids),
+  scplot_residuals_fitted(final_lm, income.composition.of.resources),
+  scplot_residuals_fitted(final_lm, adult.mortality.low),
+  scplot_residuals_fitted(final_lm, adult.mortality.middle),
+  scplot_residuals_fitted(final_lm, adult.mortality.very_high),
+  scplot_residuals_fitted(final_lm, infant.deaths),
+  ncol = 3
+)
+```
+
 ```{r}
 #ols_test_breusch_pagan(final_lm, rhs = T, multiple=T)
 bptest(final_lm, data = df_train)
