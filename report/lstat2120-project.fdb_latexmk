@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1670432164 "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" "lstat2120-project.pdf" "lstat2120-project" 1670432164
+["pdflatex"] 1670494522 "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" "lstat2120-project.pdf" "lstat2120-project" 1670494522
   "../header.tex" 1669632843 4964 da330464b9dda5fde8ef65a3b0bc81f2 ""
   "../preamble.tex" 1669639677 289 13f49ed58259799bfd7aec72b9b243a7 ""
   "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" 1670229964 417 b3e2870f405cf8fdafe3c0773073ae9e ""
@@ -347,7 +347,7 @@
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1653114964 2826437 0068b8da7e1876b9f00b45650024546e ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
   "figures/cooks_distance.png" 1670429452 80917 fd8c239ea12827ea800fe16414d3be40 ""
-  "figures/correlation_matrix.png" 1669993081 248180 6141ac8ef3f0cbcd868843f9b349cbee ""
+  "figures/correlation_matrix.png" 1670494466 267140 c32e70e2d69b2f6431da0132c7436f01 ""
   "figures/histogram_economic_features.png" 1670074843 72881 9b3c549b671ce328b599b942cba8bf3a ""
   "figures/logo_ucl.png" 1669633309 6986 8d886fef47d0e76ddd9a54017c160ddb ""
   "figures/normal-qq-plot.png" 1670432132 94693 c576624355afb90276dabb3ac7c8883e ""
@@ -358,7 +358,7 @@
   "figures/residuals_vs_fitted.png" 1670431746 152589 2d9bb70fea5305d9259415a9ac1ed3bd ""
   "figures/vif_final_model.png" 1670431440 90761 6fb524729b8d75709fcb07046d85b414 ""
   "figures/vif_full_model.png" 1670424591 175809 4a212344cf64705cd46d7c068829a88e ""
-  "lstat2120-project.aux" 1670432164 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "lstat2120-project.aux" 1670494522 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "lstat2120-project.out" 0 -1 0 "pdflatex"
   "lstat2120-project.tex" 1670229964 417 b3e2870f405cf8fdafe3c0773073ae9e ""
   "sections/appendix.tex" 1670070496 2450 ffe4e56ee0ded831be9dd0696945f412 ""

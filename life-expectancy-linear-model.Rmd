@@ -12,16 +12,21 @@ knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
-## Importing dataset
+```{r}
+# clean variables
+rm(list = ls())
+```
+
+## Importing libraries
 ```{r}
 library(tidyverse)
 
 # color palettes
 library(hrbrthemes)
-library(viridis)   
+library(viridis)
 
 # train-test split
-library(rsample) 
+library(rsample)
 
 # tables
 library(formattable)
@@ -58,11 +63,14 @@ library(tseries)
 library(MASS)
 ```
 
-
 ```{r}
-# clear variables
-rm(list = ls())
+source("utils/plots.r")
+source("utils/tables.r")
+source("utils/misc.r")
+```
 
+## Importing dataset
+```{r}
 df <- read.csv("dataset/life-expectancy-2012.csv", sep = ",", dec = ".", header = TRUE)
 
 # convert status and adult.mortality to factor (gives an order to categorical variable)
@@ -75,9 +83,9 @@ df <- df %>%
 glimpse(df)
 ```
 
-### Exploratory Data Analysis
+## Exploratory Data Analysis
 
-#### Qualitative variables
+### Qualitative variables
 
 ```{r}
 par(mfrow = c(1, 2))
@@ -94,25 +102,6 @@ adult_mortality_plot <- barplot(adult_mortality_percentage, col = "#3F6D9B", yla
 #### Quantitative variables
 
 ```{r out.width="80%"}
-compute_moments_feature <- function(feature_name, feature_data, decimals = 2) {
-  summary_feature <- data.frame(
-    variable = feature_name,
-    mean = round(mean(feature_data), decimals),
-    std_dev = round(sd(feature_data), decimals),
-    skewness = round(skewness(feature_data), decimals),
-    kurtosis = round(kurtosis(feature_data), decimals)
-  )
-  return(summary_feature)
-}
-
-summary_moments <- function(df) {
-  summary <- c()
-  for (feature in colnames(df)) {
-    summary <- bind_rows(summary, compute_moments_feature(feature, df[[feature]]))
-  }
-  return(summary)
-}
-
 df %>%
   dplyr::select_if(is.numeric) %>%
   summary_moments %>%
@@ -141,31 +130,12 @@ df_other <- df %>%
 ```
 
 ```{r}
-scatter_plot2 <- function(df, x, y) {
-  ggplot(df, aes({{x}})) +
-    geom_histogram()
-}
+# scatter_plot2 <- function(df, x, y) {
+#   ggplot(df, aes({{x}})) +
+#     geom_histogram()
+# }
 
-scatter_plot2(df, bmi, gdp)
-```
-
-```{r}
-histplot <- function(df, feature) {
-  ggplot(df, aes({{feature}})) +
-    geom_histogram(color = "#FFFFFF", fill = "#3F6D9B") +
-    labs(x = "", y = "Count") +
-    ggtitle(rlang::englue("{{feature}}")) +
-    theme_classic()
-}
-
-bplot <- function(df, feature) {
-  ggplot(df, aes(x = 1, y = {{feature}})) +
-    geom_boxplot() +
-    stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") +
-    scale_x_continuous(breaks = NULL) +
-    theme(axis.title.x = element_blank()) +
-    theme_minimal()
-}
+# scatter_plot2(df, bmi, gdp)
 ```
 
 ```{r}
@@ -249,7 +219,7 @@ gridExtra::grid.arrange(
 
 
 
-#### Correlation matrix
+### Correlation matrix
 
 ```{r}
 corr_matrix <- cor(keep(df, is.numeric))
@@ -275,35 +245,7 @@ df <- df %>%
 
 We convert categorical variables into dummies variables (one-hot-encoding)
 ```{r}
-one_hot_encoding = function(df, columns){
-  # create a copy of the original data.frame for not modifying the original
-  df = cbind(df)
-  # convert the columns to vector in case it is a string
-  columns = c(columns)
-  # for each variable perform the One hot encoding
-  for (column in columns){
-    unique_values = sort(unique(df[column])[,column])
-    non_reference_values  = unique_values[c(-1)] # the first element is going 
-                                                 # to be the reference by default
-    for (value in non_reference_values){
-      # the new dummy column name
-      new_col_name = paste0(column, '.', str_replace_all(tolower(value), " ", "_"))
-      # create new dummy column for each value of the non_reference_values
-      df[new_col_name] <- with(df, ifelse(df[,column] == value, 1, 0))
-    }
-    # delete the one hot encoded column
-    df[column] = NULL
-
-  }
-  return(df)
-}
-
 df_one_hot <- df
-
-#df_one_hot <- df_one_hot %>%
-#  mutate(developed = ifelse(df_one_hot$status == "Developed", 1, 0)) %>%
-#  select(-status)
-
 df_one_hot <- one_hot_encoding(df_one_hot, c("status", "adult.mortality"))
 
 head(df_one_hot)
@@ -336,65 +278,6 @@ df_test <- testing(split)
 head(df_train)
 ```
 
-#### Multicollinearity
-
-```{r}
-full_lm <- lm(life.expectancy ~ ., data = df_train)
-
-var_inf_factor = ols_vif_tol(full_lm)
-var_inf_factor_table = within(var_inf_factor, {
-  Tolerance = round(Tolerance, 2)
-  VIF = round(VIF, 2)
-})
-
-round(mean(var_inf_factor$VIF), 2)
-
-gt(var_inf_factor_table) %>%
-  tab_header(title = "Variation inflation factor (VIF)", subtitle = "full model") #%>%
-  #gtsave("report/figures/vif_full_model.png")
-
-new_df <- df_train %>%
-  dplyr::select(-c(gdp, income.composition.of.resources))
-
-new_lm <- lm(life.expectancy ~ ., data = new_df)
-  
-var_inf_factor = ols_vif_tol(new_lm)
-var_inf_factor_table = within(var_inf_factor, {
-  Tolerance = round(Tolerance, 2)
-  VIF = round(VIF, 2)
-})
-
-round(mean(var_inf_factor$VIF), 2)
-
-gt(var_inf_factor_table) %>%
-  tab_header(title = "Variation inflation factor (VIF)", subtitle = "new model")
-```
-
-```{r}
-get_model_formula <- function(model) {
-  explanatory_variables <- tidy(model)$term[!tidy(model)$term == "(Intercept)"]
-  paste("life.expectancy ~", paste(explanatory_variables, collapse = "+"))
-}
-```
-
-```{r}
-response <- df_train$life.expectancy
-explanatory <- df_train %>% 
-  dplyr::select(-life.expectancy)
-
-# k-fold cross-validation to find optimal lambda value (kappa in lecture notes)
-cv_model <- cv.glmnet(x = as.matrix(explanatory), y = response, alpha = 0)
-#plot(cv_model)
-
-best_lambda <- cv_model$lambda.min
-ridge <- glmnet(x = explanatory, y = response, alpha = 0, lambda = best_lambda)
-
-ridge_formula <- get_model_formula(ridge)
-
-ridge_lm <- lm(ridge_formula, data = df_train)
-#ridge_summary <- model_comparison_table(ridge_lm, "RIDGE")
-```
-
 ```{r}
 #df_train <- df_train %>%
 #  dplyr::select(-c(gdp, income.composition.of.resources))
@@ -403,33 +286,19 @@ ridge_lm <- lm(ridge_formula, data = df_train)
 #  dplyr::select(-c(gdp, income.composition.of.resources))
 ```
 
+```{r}
+full_lm <- lm(life.expectancy ~ ., data = df_train)
+intercept_only <- lm(life.expectancy ~ 1, data = df_train)
+```
+
 #### Cp Mallow
 ```{r}
-#full_lm <- lm(life.expectancy ~ ., data = df_train)
-full_lm <- ridge_lm
+
 ``` 
 
 #### Forward stepwise selection
 
 ```{r}
-model_comparison_table <- function(model, name) {
-  model_summary <- glance(model)
-  
-  return(data.frame(
-    Model = name,
-    Number_of_variables = length(tidy(model)$term) - 1,
-    AIC = round(model_summary$AIC, 2),
-    BIC = round(model_summary$BIC, 2), 
-    Residuals_deviance = round(model_summary$deviance, 2),
-    Adj_R2 = round(model_summary$adj.r.squared, 2)
-  ))
-}
-```
-
-```{r}
-full_lm <- ridge_lm
-intercept_only <- lm(life.expectancy ~ 1, data = df_train)
-
 # direction = "forward" => forward selection ; direction = "backward" => backward selection 
 # direction = "both" => forward or backward stepwise selection (forward and backward is chosen with scope parameter)
 
@@ -532,12 +401,7 @@ final_lm <- model5
 final_lm_variables <- tidy(final_lm)$term
 print(final_lm_variables[0:-1])
 
-scplot_residuals_variable <- function(model, variable) {
-  ggplot(augment(model), aes({{variable}}, y = .resid)) +
-    geom_point() +
-    labs(x = rlang::englue("{{variable}}"), y = "residuals") +
-    theme_minimal()
-}
+
 
 gridExtra::grid.arrange(
   scplot_residuals_variable(final_lm, total.expenditure),
@@ -592,16 +456,59 @@ which(di_ast > student_quantile)
 
 #### Multicollinearity
 ```{r}
-var_inf_factor_final_lm = ols_vif_tol(final_lm)
-var_inf_factor_table_final_lm = within(var_inf_factor_final_lm, {
+var_inf_factor = ols_vif_tol(final_lm)
+var_inf_factor_table = within(var_inf_factor, {
   Tolerance = round(Tolerance, 2)
   VIF = round(VIF, 2)
 })
 
 round(mean(var_inf_factor$VIF), 2)
 
-gt(var_inf_factor_table_final_lm) %>%
+gt(var_inf_factor_table) %>%
   tab_header(title = "Variation inflation factor (VIF)", subtitle = "final model") #%>%
+  #gtsave("report/figures/vif_final_model.png")
+```
+
+```{r}
+
+response <- df_train$life.expectancy
+
+explanatory_variables <- str_replace(tidy(final_lm)$term[0:-1], ":", "_")
+explanatory_matrix <- df_train %>% 
+  mutate(total.expenditure_infant.deaths = total.expenditure * infant.deaths) %>%
+  dplyr::select(explanatory_variables) %>%
+  as.matrix
+
+df_train_with_interaction_term <- df_train %>%
+  mutate(total.expenditure_infant.deaths = total.expenditure * infant.deaths) 
+
+# k-fold cross-validation to find optimal lambda value (kappa in lecture notes)
+cv_model <- cv.glmnet(x = explanatory_matrix, y = response, alpha = 0)
+#plot(cv_model)
+
+best_lambda <- cv_model$lambda.min
+ridge <- glmnet(x = explanatory_matrix, y = response, alpha = 0, lambda = best_lambda)
+
+ridge_formula <- get_model_formula(ridge)
+
+ridge_lm <- lm(ridge_formula, data = df_train_with_interaction_term)
+ridge_summary <- model_comparison_table(ridge_lm, "RIDGE")
+
+gt(ridge_summary) %>%
+  tab_header(title = "Ridge regression applied on selected model")
+```
+Let's check if multicollinearity is fixed
+```{r}
+var_inf_factor = ols_vif_tol(ridge_lm)
+var_inf_factor_table = within(var_inf_factor, {
+  Tolerance = round(Tolerance, 2)
+  VIF = round(VIF, 2)
+})
+
+round(mean(var_inf_factor$VIF), 2)
+
+gt(var_inf_factor_table) %>%
+  tab_header(title = "Variation inflation factor (VIF)", subtitle = "after correction with ridge") #%>%
   #gtsave("report/figures/vif_final_model.png")
 ```
 
@@ -610,13 +517,6 @@ gt(var_inf_factor_table_final_lm) %>%
 ```{r}
 final_lm_variables <- tidy(final_lm)$term
 print(final_lm_variables[0:-1])
-
-scplot_residuals_fitted <- function(model, variable) {
-  ggplot(augment(model), aes({{variable}}, y = .fitted)) +
-    geom_point() +
-    labs(x = rlang::englue("{{variable}}"), y = "fitted") +
-    theme_minimal()
-}
 
 gridExtra::grid.arrange(
   scplot_residuals_fitted(final_lm, total.expenditure),
@@ -631,8 +531,40 @@ gridExtra::grid.arrange(
 ```
 
 ```{r}
-#ols_test_breusch_pagan(final_lm, rhs = T, multiple=T)
 bptest(final_lm, data = df_train)
+```
+
+```{r}
+h1 <- histplot(df_train, life.expectancy)
+h2 <- histplot(df_train, log(life.expectancy))
+
+gridExtra::grid.arrange(h1, h2, ncol = 2)
+```
+
+```{r}
+df_train_final_model <- df_train_with_interaction_term %>%
+  dplyr::select(c(life.expectancy, explanatory_variables))
+
+head(df_train_final_model)
+
+final_lm_log <- lm(log(life.expectancy) ~ ., data = df_train_final_model)
+```
+
+```{r}
+gridExtra::grid.arrange(
+  scplot_residuals_fitted(final_lm_log, total.expenditure),
+  scplot_residuals_fitted(final_lm_log, hiv.aids),
+  scplot_residuals_fitted(final_lm_log, income.composition.of.resources),
+  scplot_residuals_fitted(final_lm_log, adult.mortality.low),
+  scplot_residuals_fitted(final_lm_log, adult.mortality.middle),
+  scplot_residuals_fitted(final_lm_log, adult.mortality.very_high),
+  scplot_residuals_fitted(final_lm_log, infant.deaths),
+  ncol = 3
+)
+```
+
+```{r}
+bptest(final_lm_log, data = df_train_final_model)
 ```
 
 #### Autocorrelation
