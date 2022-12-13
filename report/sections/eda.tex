@@ -12,7 +12,7 @@ The \textit{alcohol} variable is the consumption of alcohol per capita (of $15$ 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/qualitative_variables_plot.png}
+	\includegraphics{figures/eda/histogram_qualitative_variables.png.png}
 	\caption{barplot of the qualitative variables}
 	\label{fig:qualitative_variables_barplot}
 \end{figure}
@@ -23,19 +23,88 @@ Let's take a look to the table of the 4 moments (\textit{mean}, \textit{standard
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/quantitative_variables_moments.png}
+	\includegraphics{figures/eda/quantitative_variables_moments.png}
 	\caption{table of moments (mean, standard deviation, skewness, kurtosis) for the quantitative variables}
 	\label{fig:quantitative_variables_moments}
 \end{figure}
 
 The \textbf{life expectancy} has a mean of roughly $70$ years with a standard deviation of $8.6$. It is slightly negatively skewed which indicates that some countries have low life expectancy. The kurtosis is less than $3$ so the distribution is a litlle bit flattened.
 
+% TARGET
+
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/histogram_economic_features.png}
+	\includegraphics{figures/eda/histogram_boxplot_target.png}
+	\caption{Histogram and boxplot of the target variable (life expectancy)}
+	\label{fig:histogram_boxplot_target}
+\end{figure}
+
+% ECONOMIC
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/histogram_economic_features.png}
 	\caption{Histogram of economic features}
 	\label{fig:histogram_economic_features}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/boxplot_economic_features.png}
+	\caption{Boxplot of economic features}
+	\label{fig:boxplot_economic_features}
+\end{figure}
+
+% SOCIAL
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/histogram_boxplot_social_features.png}
+	\caption{Histogram and boxplot of social features}
+	\label{fig:histogram_boxplot_social_features}
+\end{figure}
+
+% MORTALITY
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/histogram_mortality_features.png}
+	\caption{Histogram of mortality features}
+	\label{fig:histogram_mortality_features}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/boxplot_mortality_features.png}
+	\caption{Boxplot of mortality features}
+	\label{fig:boxplot_mortality_features}
+\end{figure}
+
+% HEALTH
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/histogram_health_features.png}
+	\caption{Histogram of health features}
+	\label{fig:histogram_health_features}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/boxplot_health_features.png}
+	\caption{Boxplot of health features}
+	\label{fig:boxplot_health_features}
+\end{figure}
+
+% OTHER
+
+\begin{figure}[H]
+	\centering
+	\includegraphics{figures/eda/histogram_boxplot_misc_features.png}
+	\caption{Histogram and boxplot of misc features}
+	\label{fig:histogram_boxplot_misc_features}
+\end{figure}
+
 
 The \textbf{infant death} has a mean of $31 / 1000$ but has a huge standard deviation ($112.6$). We see that heavily tailed with a kurtosis of $66.9$. The same kind of conclusion can be made for the \textbf{deaths under five year old}.
 
@@ -49,7 +118,7 @@ We look at the correlation matrix in order to see if there are any highly correl
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/correlation_matrix.png}
+	\includegraphics{figures/eda/correlation_matrix.png}
 	\caption{correlation matrix of dataset}
 	\label{fig:correlation_matrix}
 \end{figure}
@@ -63,4 +132,3 @@ We see that severall variables are highly correlated:
 	\item The \textbf{hepatitis B} and \textbf{polio} with \textbf{diphteria}.
 	\item The \textbf{life expectancy} with the \textbf{HDI in terms of income composition of resources} and \textbf{schooling}.
 \end{itemize}
-- 

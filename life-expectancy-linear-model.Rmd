@@ -61,6 +61,9 @@ library(tseries)
 
 # standardized (= studentized) deleted residuals
 library(MASS)
+
+# export summary to latex
+library(Hmisc)
 ```
 
 ```{r}
@@ -108,8 +111,8 @@ df %>%
   gt %>%
   tab_header(
     title = "4 moments of quantitative variables"
-  ) #%>%
-  #gtsave("report/figures/quantitative_variable_moments.png", expand = 10)
+  ) %>%
+  gtsave("report/figures/eda/quantitative_variable_moments.png", expand = 10)
 ```
 
 ```{r}
@@ -143,6 +146,7 @@ gridExtra::grid.arrange(histplot(df, life.expectancy), bplot(df, life.expectancy
 ```
 
 ```{r}
+# economic features
 gridExtra::grid.arrange(
   histplot(df, percentage.expenditure), 
   histplot(df, total.expenditure),
@@ -162,6 +166,7 @@ gridExtra::grid.arrange(
 
 
 ```{r}
+# social features
 gridExtra::grid.arrange(
   histplot(df, population), 
   histplot(df, schooling),
@@ -172,6 +177,7 @@ gridExtra::grid.arrange(
 ```
 
 ```{r}
+# mortality
 gridExtra::grid.arrange(
   histplot(df, infant.deaths),
   histplot(df, hiv.aids),
@@ -190,6 +196,7 @@ gridExtra::grid.arrange(
 ```
 
 ```{r}
+# health
 gridExtra::grid.arrange(
   histplot(df, hepatitis.b), 
   histplot(df, measles),
@@ -293,53 +300,22 @@ intercept_only <- lm(life.expectancy ~ 1, data = df_train)
 
 #### Cp Mallow
 ```{r}
-
+ols_step_all_possible(full_lm)
 ``` 
 
 #### Forward stepwise selection
 
 ```{r}
-# direction = "forward" => forward selection ; direction = "backward" => backward selection 
-# direction = "both" => forward or backward stepwise selection (forward and backward is chosen with scope parameter)
-
-# k = 2 => use AIC criterion (tendancy too select too much variables and overfit)
-forward_stepwise_aic_lm <- step(
-  intercept_only,
-  direction = "both", 
-  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .),
-  k = 2
-)
-
-backward_stepwise_aic_lm <- step(
-  full_lm, 
-  direction = "both", 
-  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
-  k = 2,
-  trace = 0
-)
-
-# k = log(n) => use BIC criterion (penalize more but can underfit)
-forward_stepwise_bic_lm <- step(
-  intercept_only,
-  direction = "both", 
-  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
-  k = log(nrow(df_train)),
-  trace = 0
-)
-
-backward_stepwise_bic_lm <- step(
-  full_lm, 
-  direction = "both", 
-  scope = list(lower = life.expectancy ~ 1, upper = life.expectancy ~ .), 
-  k = log(nrow(df_train)),
-  trace = 0
-)
+forward_p_value_lm <- ols_step_forward_p(full_lm, penter = 0.15)$model
+backward_p_value_lm <- ols_step_backward_p(full_lm, prem = 0.15)$model
+forward_aic_lm <- ols_step_forward_aic(full_lm)$model
+backward_aic_lm <- ols_step_backward_aic(full_lm)$model
 
 full_model_summary <- model_comparison_table(full_lm, "Full model")
-forward_stepwise_aic_summary <- model_comparison_table(forward_stepwise_aic_lm, "Forward stepwise AIC")
-backward_stepwise_aic_summary <- model_comparison_table(backward_stepwise_aic_lm, "Backward stepwise AIC")
-forward_stepwise_aic_summary <- model_comparison_table(forward_stepwise_aic_lm, "Forward stepwise AIC")
-backward_stepwise_bic_summary <- model_comparison_table(backward_stepwise_bic_lm, "Backward stepwise BIC")
+forward_p_value_summary <- model_comparison_table(forward_p_value_lm, "Forward p-value")
+backward_p_value_summary <- model_comparison_table(backward_p_value_lm, "Backward p-value")
+forward_aic_summary <- model_comparison_table(forward_aic_lm, "Forward AIC")
+backward_aic_summary <- model_comparison_table(backward_aic_lm, "Backward AIC")
 ```
 
 #### LASSO 
@@ -363,14 +339,23 @@ lasso_summary <- model_comparison_table(lasso_lm, "LASSO")
 ```
 
 ```{r}
-model_selection_table <- rbind(full_model_summary, forward_stepwise_aic_summary, backward_stepwise_aic_summary, forward_stepwise_aic_summary, backward_stepwise_bic_summary, lasso_summary)
-gt(model_selection_table)
+model_selection_table <- rbind(full_model_summary, forward_p_value_summary, backward_p_value_summary, forward_aic_summary, backward_aic_summary, lasso_summary)
+gt(model_selection_table) %>%
+  tab_header(
+    title = "Comparison of models"
+  ) %>%
+  gtsave("report/figures/models/models.png")
+```
+
+```{r}
+tidy(backward_p_value_lm)$term
+tidy(backward_aic_lm)$term
 ```
 
 #### Interactions with variables
 
 ```{r}
-chosen_model_formula <- get_model_formula(backward_stepwise_aic_lm)
+chosen_model_formula <- get_model_formula(backward_p_value_lm)
 
 model1 <- lm(paste(chosen_model_formula, "+ infant.deaths * measles"), data = df_train)
 model2 <- lm(paste(chosen_model_formula, "+ adult.mortality.high * alcohol"), data = df_train)
@@ -380,7 +365,7 @@ model5 <- lm(paste(chosen_model_formula, "+ total.expenditure * infant.deaths"),
 model6 <- lm(paste(chosen_model_formula, "+ percentage.expenditure * diphtheria"), data = df_train)
 
 interaction_table <- rbind(
-  backward_stepwise_aic_summary,
+  backward_p_value_summary,
   model_comparison_table(model1, "infant.deaths * measles"),
   model_comparison_table(model2, "adult.mortality.high * alcohol"),
   model_comparison_table(model3, "adult.mortality.very_high * alcohol"),
@@ -389,20 +374,28 @@ interaction_table <- rbind(
   model_comparison_table(model6, "percentage.expenditure * diphtheria")
 )
 
-gt(interaction_table)
+gt(interaction_table) %>%
+  tab_header(
+    title = "Comparison of the chosen model with the adding of interaction term"
+  ) %>%
+  gtsave("report/figures/models/models_interactions.png")
 ```
 
 ```{r}
-final_lm <- model5
+final_lm <- backward_p_value_lm
+tidy(final_lm)
+```
+
+```{r}
+explanatory_variables <- tidy(final_lm)$term[0:-1]
+df_train_final_lm <- df_train %>%
+  dplyr::select(c(life.expectancy, explanatory_variables))
+
+head(df_train_final_lm)
 ```
 
 #### Nonlinearity
 ```{r}
-final_lm_variables <- tidy(final_lm)$term
-print(final_lm_variables[0:-1])
-
-
-
 gridExtra::grid.arrange(
   scplot_residuals_variable(final_lm, total.expenditure),
   scplot_residuals_variable(final_lm, hiv.aids),
@@ -410,7 +403,7 @@ gridExtra::grid.arrange(
   scplot_residuals_variable(final_lm, adult.mortality.low),
   scplot_residuals_variable(final_lm, adult.mortality.middle),
   scplot_residuals_variable(final_lm, adult.mortality.very_high),
-  scplot_residuals_variable(final_lm, infant.deaths),
+  #scplot_residuals_variable(final_lm, infant.deaths),
   ncol = 3
 )
 ```
@@ -426,32 +419,50 @@ p <- length(final_lm$coefficients) - 1
 # diagonal of the hat matrix
 h_ii <- lm.influence(final_lm)$hat
 outliers_criterion <- 2 * p / n
+
+print("outliers criterion")
 outliers_criterion
 
+print("outliers")
 which(h_ii > outliers_criterion)
+print("number of outliers")
 length(which(h_ii > outliers_criterion))
 
 ## influentials on fitted values
 dffits <- dffits(final_lm)
 influential_fitted_criterion <- 2 * sqrt(p / n)
+
+print("influentials on fitted values criterion")
 influential_fitted_criterion
 
-which(abs(dffits) > influential_fitted_criterion)
+print("number of influentials for fitted values")
 length(which(abs(dffits) > influential_fitted_criterion))
 
-plot(dffits, type = "h", xlab = "observation")
-abline(h = influential_fitted_criterion, lty = 2)
-abline(h = -influential_fitted_criterion, lty = 2)
+ols_plot_dffits(final_lm)
+
+#which(abs(dffits) > influential_fitted_criterion)
+
+#plot(dffits, type = "h", xlab = "observation")
+#abline(h = influential_fitted_criterion, lty = 2)
+#abline(h = -influential_fitted_criterion, lty = 2)
 
 ## influentials on regression coefficients
-cooks <- cooks.distance(final_lm)
-plot(cooks, xlab = "observations")
-abline(h = 4/n, lty = 2, col = "steelblue")
+ols_plot_dfbetas(final_lm)
+
+ols_plot_cooksd_chart(final_lm)
+
+#cooks <- cooks.distance(final_lm)
+#plot(cooks, xlab = "observations")
+#abline(h = 4/n, lty = 2, col = "steelblue")
 
 # outliers with respect to the response variable 
 di_ast <- studres(final_lm)
 student_quantile <- qt(0.975, df = n - p - 1)
+
+print("outliers with respect to the response variable")
 which(di_ast > student_quantile)
+
+ols_plot_resid_lev(final_lm)
 ```
 
 #### Multicollinearity
@@ -465,17 +476,21 @@ var_inf_factor_table = within(var_inf_factor, {
 round(mean(var_inf_factor$VIF), 2)
 
 gt(var_inf_factor_table) %>%
-  tab_header(title = "Variation inflation factor (VIF)", subtitle = "final model") #%>%
-  #gtsave("report/figures/vif_final_model.png")
+  tab_header(
+    title = "Variation inflation factor (VIF)", 
+    subtitle = "final model"
+  ) #%>%
+  #gtsave("report/figures/models/vif_final_model.png")
 ```
 
 ```{r}
-
+# no problem of multicolinearity anymore (at least for now). Do not need to apply (and fix) the ridge regression
 response <- df_train$life.expectancy
 
 explanatory_variables <- str_replace(tidy(final_lm)$term[0:-1], ":", "_")
+#explanatory_variables <- tidy(final_lm)$term[0:-1]
 explanatory_matrix <- df_train %>% 
-  mutate(total.expenditure_infant.deaths = total.expenditure * infant.deaths) %>%
+  #mutate(total.expenditure_infant.deaths = total.expenditure * infant.deaths) %>%
   dplyr::select(explanatory_variables) %>%
   as.matrix
 
@@ -525,9 +540,13 @@ gridExtra::grid.arrange(
   scplot_residuals_fitted(final_lm, adult.mortality.low),
   scplot_residuals_fitted(final_lm, adult.mortality.middle),
   scplot_residuals_fitted(final_lm, adult.mortality.very_high),
-  scplot_residuals_fitted(final_lm, infant.deaths),
+  #scplot_residuals_fitted(final_lm, infant.deaths),
   ncol = 3
 )
+```
+
+```{r}
+ols_plot_resid_fit(final_lm)
 ```
 
 ```{r}
@@ -535,36 +554,25 @@ bptest(final_lm, data = df_train)
 ```
 
 ```{r}
+# find optimal lambda for Box-Cox transformation
+bc <- boxcox(life.expectancy ~ ., data = df_train_final_lm)
+lambda_bc <- bc$x[which.max(bc$y)]
+
+final_lm_bc <- lm((((life.expectancy^lambda_bc) - 1) / lambda_bc) ~ ., data = df_train_final_lm)
+```
+```{r}
 h1 <- histplot(df_train, life.expectancy)
-h2 <- histplot(df_train, log(life.expectancy))
+h2 <- histplot(df_train, ((life.expectancy^lambda_bc) - 1) / lambda_bc)
 
 gridExtra::grid.arrange(h1, h2, ncol = 2)
 ```
 
 ```{r}
-df_train_final_model <- df_train_with_interaction_term %>%
-  dplyr::select(c(life.expectancy, explanatory_variables))
-
-head(df_train_final_model)
-
-final_lm_log <- lm(log(life.expectancy) ~ ., data = df_train_final_model)
+ols_plot_resid_fit(final_lm_bc)
 ```
 
 ```{r}
-gridExtra::grid.arrange(
-  scplot_residuals_fitted(final_lm_log, total.expenditure),
-  scplot_residuals_fitted(final_lm_log, hiv.aids),
-  scplot_residuals_fitted(final_lm_log, income.composition.of.resources),
-  scplot_residuals_fitted(final_lm_log, adult.mortality.low),
-  scplot_residuals_fitted(final_lm_log, adult.mortality.middle),
-  scplot_residuals_fitted(final_lm_log, adult.mortality.very_high),
-  scplot_residuals_fitted(final_lm_log, infant.deaths),
-  ncol = 3
-)
-```
-
-```{r}
-bptest(final_lm_log, data = df_train_final_model)
+bptest(final_lm_bc, data = df_train_final_model)
 ```
 
 #### Autocorrelation
@@ -574,6 +582,7 @@ bgtest(final_lm, order = 8)
 
 #### Normality of the residuals
 ```{r}
+ols_plot_resid_qq(final_lm)
 qqnorm(final_lm$residuals, pch = 1, frame = FALSE)
 qqline(final_lm$residuals, lwd = 2)
 

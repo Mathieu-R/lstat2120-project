@@ -24,8 +24,8 @@ model_comparison_table <- function(model, name) {
     Model = name,
     Number_of_variables = length(tidy(model)$term) - 1,
     AIC = round(model_summary$AIC, 2),
-    BIC = round(model_summary$BIC, 2), 
-    Residuals_deviance = round(model_summary$deviance, 2),
-    Adj_R2 = round(model_summary$adj.r.squared, 2)
+    #BIC = round(model_summary$BIC, 2), 
+    #Residuals_deviance = round(model_summary$deviance, 2),
+    Adjusted_R2 = round(model_summary$adj.r.squared, 2)
   ))
 }
