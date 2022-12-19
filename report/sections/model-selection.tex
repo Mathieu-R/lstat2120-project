@@ -299,11 +299,11 @@ We perform t-tests of estimated coefficients in order to test their significance
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{images/test_t_coefficients_robust_inference.PNG}
+	\includegraphics{images/test_t_coefficients_homoskedasticity.PNG}
 	\caption{Output of t-test of coefficients}
 \end{figure}
 
-On the basis of the p-values, we can reject the null hypothesis for all the coefficients. We can conclude that all the coefficients are statistically significant at a level of significance of 10\%. At a significance level of 5\%, the “total expenditure” coefficient is no longer statistically significant. \\
+On the basis of the p-values, we can reject the null hypothesis for all the coefficients. We can conclude that all the coefficients are statistically significant at a level of significance of 5\%. \\
 
 On the basis of the estimates, we can say that the effect of low and middle adult mortality rates on life expectancy are positive while the effect of a very high adult mortality rate on life expectancy is negative and stronger. From the regression output, we see that the estimate of the regression coefficient for “Adult mortality very high” is -5.007. This signifies that on average, a country with a very high adult mortality rate has a life expectancy of 5 years less. On the contrary, a country with a low  adult mortality rate has a life expectancy higher of 3 years on average and 2 years for a country with a moderate adult mortality rate. 
 
@@ -323,11 +323,11 @@ We formulate the null and alternative hypotheses :
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{images/linear_combination_of_coeff.PNG}
+	\includegraphics{images/linear_combination_of_coeff_homoskedasticity.PNG}
 	\caption{Output of linear combination test}
 \end{figure}
 
-Since the p-value (0.101) is larger than the significance level of 0.05, we fail to reject the null hypothesis that these two regression coefficients are equal. This signifies that a country with a low adult mortality rate and a country with a moderate adult mortality rate could have the same reduction in years of life expectancy if all the other effects remain constant. 
+Since the p-value (0.211) is larger than the significance level of 0.05, we fail to reject the null hypothesis that these two regression coefficients are equal. This signifies that a country with a low adult mortality rate and a country with a moderate adult mortality rate could have the same reduction in years of life expectancy if all the other effects remain constant. 
 
 \section{Coefficients equal to zero}
 
@@ -340,12 +340,12 @@ We test a subset of coefficients equal to zero. In this case, we test the coeffi
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{images/wald_test_subset_coeff_zero.PNG}
+	\includegraphics{images/wald_test_subset_coeff_zero_homoskedasticity.PNG}
 	\caption{Output of Wald test}
 \end{figure}
 
-The p-value is 0.0025 which is below the significance level of 0.05. We can thus reject the null hypothesis. We can conclude that there is sufficient statistical evidence that the different categorial variables corresponding to adult mortality rates explain life expectancy. 
+The p-value is 6.52e-05 which is below the significance level of 0.05. We can thus reject the null hypothesis. We can conclude that there is sufficient statistical evidence that the different categorical variables corresponding to adult mortality rates explain life expectancy. 
 
 \section{Prediction interval}
 
-We calculate a 95\% prediction interval for the 26 observations excluded from the dataset in the beginning. We conclude that almost all the intervals cover the excluded observations. The last observation of the test dataset is the only one not covered by the corresponding 95\% prediction interval. However, if we take the 99\% prediction interval, this observation is contained in the prediction interval.
+We calculate a 95\% prediction interval for the 26 observations excluded from the dataset in the beginning. We conclude that almost all the intervals cover the excluded observations. The last observation of the test dataset is the only one not covered by the corresponding 95\% prediction interval. However, if we take the 99\% prediction interval, this observation is contained in the prediction interval. 
