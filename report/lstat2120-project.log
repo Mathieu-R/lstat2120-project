@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.21)  19 DEC 2022 04:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.21)  19 DEC 2022 10:19
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1271,200 +1271,243 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 3.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )) (./sections/eda.tex
+<figures/eda/histogram_qualitative_variables.png, id=19, 702.625pt x 433.62pt>
+File: figures/eda/histogram_qualitative_variables.png Graphic file (type png)
+<use figures/eda/histogram_qualitative_variables.png>
+Package pdftex.def Info: figures/eda/histogram_qualitative_variables.png  used on input line 15.
+(pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
 
-LaTeX Warning: File `figures/eda/histogram_qualitative_variables.png.png' not found on input line 15.
-
-
-./sections/eda.tex:15: Package pdftex.def Error: File `figures/eda/histogram_qualitative_variables.png.png' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.15 ...a/histogram_qualitative_variables.png.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 15.
-(/usr/local/texlive/2022/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.19 
       [1]
-<figures/eda/quantitative_variables_moments.png, id=32, 1288.815pt x 1401.235pt>
+<figures/eda/quantitative_variables_moments.png, id=33, 1288.815pt x 1401.235pt>
 File: figures/eda/quantitative_variables_moments.png Graphic file (type png)
 <use figures/eda/quantitative_variables_moments.png>
 Package pdftex.def Info: figures/eda/quantitative_variables_moments.png  used on input line 26.
 (pdftex.def)             Requested size: 441.02318pt x 479.49248pt.
- [2]
-<figures/eda/histogram_boxplot_target.png, id=45, 702.625pt x 433.62pt>
+ [2 <./figures/eda/histogram_qualitative_variables.png>]
+<figures/eda/histogram_boxplot_target.png, id=46, 702.625pt x 433.62pt>
 File: figures/eda/histogram_boxplot_target.png Graphic file (type png)
 <use figures/eda/histogram_boxplot_target.png>
 Package pdftex.def Info: figures/eda/histogram_boxplot_target.png  used on input line 37.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [3 <./figures/eda/quantitative_variables_moments.png>]
-<figures/eda/histogram_economic_features.png, id=53, 1405.25pt x 868.24374pt>
+<figures/eda/histogram_economic_features.png, id=54, 1405.25pt x 868.24374pt>
 File: figures/eda/histogram_economic_features.png Graphic file (type png)
 <use figures/eda/histogram_economic_features.png>
 Package pdftex.def Info: figures/eda/histogram_economic_features.png  used on input line 46.
 (pdftex.def)             Requested size: 441.00504pt x 272.4781pt.
-<figures/eda/boxplot_economic_features.png, id=54, 702.625pt x 433.62pt>
+<figures/eda/boxplot_economic_features.png, id=55, 702.625pt x 433.62pt>
 File: figures/eda/boxplot_economic_features.png Graphic file (type png)
 <use figures/eda/boxplot_economic_features.png>
 Package pdftex.def Info: figures/eda/boxplot_economic_features.png  used on input line 53.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [4 <./figures/eda/histogram_boxplot_target.png> <./figures/eda/histogram_economic_features.png>]
-<figures/eda/histogram_boxplot_social_features.png, id=63, 702.625pt x 433.62pt>
+<figures/eda/histogram_boxplot_social_features.png, id=64, 702.625pt x 433.62pt>
 File: figures/eda/histogram_boxplot_social_features.png Graphic file (type png)
 <use figures/eda/histogram_boxplot_social_features.png>
 Package pdftex.def Info: figures/eda/histogram_boxplot_social_features.png  used on input line 62.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
-<figures/eda/histogram_mortality_features.png, id=64, 702.625pt x 433.62pt>
+<figures/eda/histogram_mortality_features.png, id=65, 702.625pt x 433.62pt>
 File: figures/eda/histogram_mortality_features.png Graphic file (type png)
 <use figures/eda/histogram_mortality_features.png>
 Package pdftex.def Info: figures/eda/histogram_mortality_features.png  used on input line 71.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [5 <./figures/eda/boxplot_economic_features.png> <./figures/eda/histogram_boxplot_social_features.png>]
-<figures/eda/boxplot_mortality_features.png, id=73, 702.625pt x 433.62pt>
+<figures/eda/boxplot_mortality_features.png, id=74, 702.625pt x 433.62pt>
 File: figures/eda/boxplot_mortality_features.png Graphic file (type png)
 <use figures/eda/boxplot_mortality_features.png>
 Package pdftex.def Info: figures/eda/boxplot_mortality_features.png  used on input line 78.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
-<figures/eda/histogram_health_features.png, id=74, 702.625pt x 433.62pt>
+<figures/eda/histogram_health_features.png, id=75, 702.625pt x 433.62pt>
 File: figures/eda/histogram_health_features.png Graphic file (type png)
 <use figures/eda/histogram_health_features.png>
 Package pdftex.def Info: figures/eda/histogram_health_features.png  used on input line 87.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [6 <./figures/eda/histogram_mortality_features.png> <./figures/eda/boxplot_mortality_features.png>]
-<figures/eda/boxplot_health_features.png, id=84, 702.625pt x 433.62pt>
+<figures/eda/boxplot_health_features.png, id=85, 702.625pt x 433.62pt>
 File: figures/eda/boxplot_health_features.png Graphic file (type png)
 <use figures/eda/boxplot_health_features.png>
 Package pdftex.def Info: figures/eda/boxplot_health_features.png  used on input line 94.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
-<figures/eda/histogram_boxplot_misc_features.png, id=85, 702.625pt x 433.62pt>
+<figures/eda/histogram_boxplot_misc_features.png, id=86, 702.625pt x 433.62pt>
 File: figures/eda/histogram_boxplot_misc_features.png Graphic file (type png)
 <use figures/eda/histogram_boxplot_misc_features.png>
 Package pdftex.def Info: figures/eda/histogram_boxplot_misc_features.png  used on input line 103.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [7 <./figures/eda/histogram_health_features.png> <./figures/eda/boxplot_health_features.png>]
-<figures/eda/correlation_matrix.png, id=95, 1405.25pt x 868.24374pt>
+<figures/eda/correlation_matrix.png, id=96, 1405.25pt x 868.24374pt>
 File: figures/eda/correlation_matrix.png Graphic file (type png)
 <use figures/eda/correlation_matrix.png>
 Package pdftex.def Info: figures/eda/correlation_matrix.png  used on input line 121.
 (pdftex.def)             Requested size: 441.00504pt x 272.4781pt.
  [8 <./figures/eda/histogram_boxplot_misc_features.png>]) (./sections/model-selection.tex [9 <./figures/eda/correlation_matrix.png>]
-<figures/models/models.png, id=117, 881.2925pt x 586.19pt>
+<figures/models/models.png, id=118, 881.2925pt x 586.19pt>
 File: figures/models/models.png Graphic file (type png)
 <use figures/models/models.png>
 Package pdftex.def Info: figures/models/models.png  used on input line 47.
 (pdftex.def)             Requested size: 441.0217pt x 293.34473pt.
  [10]
-<figures/models/models_interactions.png, id=131, 1246.6575pt x 586.19pt>
+<figures/models/models_interactions.png, id=132, 1246.6575pt x 586.19pt>
 File: figures/models/models_interactions.png Graphic file (type png)
 <use figures/models/models_interactions.png>
 Package pdftex.def Info: figures/models/models_interactions.png  used on input line 68.
 (pdftex.def)             Requested size: 441.01619pt x 207.36992pt.
  [11 <./figures/models/models.png>]
-<figures/models/residuals_vs_explanatory.png, id=140, 702.625pt x 433.62pt>
+<figures/models/residuals_vs_explanatory.png, id=141, 702.625pt x 433.62pt>
 File: figures/models/residuals_vs_explanatory.png Graphic file (type png)
 <use figures/models/residuals_vs_explanatory.png>
 Package pdftex.def Info: figures/models/residuals_vs_explanatory.png  used on input line 93.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [12 <./figures/models/models_interactions.png>] [13 <./figures/models/residuals_vs_explanatory.png>]
-<figures/models/dffits.png, id=160, 702.625pt x 433.62pt>
+<figures/models/dffits.png, id=161, 702.625pt x 433.62pt>
 File: figures/models/dffits.png Graphic file (type png)
 <use figures/models/dffits.png>
 Package pdftex.def Info: figures/models/dffits.png  used on input line 129.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
-<figures/models/dfbetas_1.png, id=161, 702.625pt x 433.62pt>
+<figures/models/dfbetas_1.png, id=162, 702.625pt x 433.62pt>
 File: figures/models/dfbetas_1.png Graphic file (type png)
 <use figures/models/dfbetas_1.png>
 Package pdftex.def Info: figures/models/dfbetas_1.png  used on input line 146.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [14 <./figures/models/dffits.png>]
-<figures/models/dfbetas_2.png, id=171, 702.625pt x 433.62pt>
+<figures/models/dfbetas_2.png, id=172, 702.625pt x 433.62pt>
 File: figures/models/dfbetas_2.png Graphic file (type png)
 <use figures/models/dfbetas_2.png>
 Package pdftex.def Info: figures/models/dfbetas_2.png  used on input line 153.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
-<figures/models/cooks.png, id=172, 702.625pt x 433.62pt>
+<figures/models/cooks.png, id=173, 702.625pt x 433.62pt>
 File: figures/models/cooks.png Graphic file (type png)
 <use figures/models/cooks.png>
 Package pdftex.def Info: figures/models/cooks.png  used on input line 162.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [15 <./figures/models/dfbetas_1.png> <./figures/models/dfbetas_2.png>]
-<figures/models/vif_final_model.png, id=181, 770.88pt x 630.355pt>
+<figures/models/vif_final_model.png, id=182, 770.88pt x 630.355pt>
 File: figures/models/vif_final_model.png Graphic file (type png)
 <use figures/models/vif_final_model.png>
 Package pdftex.def Info: figures/models/vif_final_model.png  used on input line 199.
 (pdftex.def)             Requested size: 441.01765pt x 360.62381pt.
  [16 <./figures/models/cooks.png>]
-<figures/models/residuals_vs_fitted_response.png, id=194, 702.625pt x 433.62pt>
+<figures/models/residuals_vs_fitted_response.png, id=195, 702.625pt x 433.62pt>
 File: figures/models/residuals_vs_fitted_response.png Graphic file (type png)
 <use figures/models/residuals_vs_fitted_response.png>
 Package pdftex.def Info: figures/models/residuals_vs_fitted_response.png  used on input line 212.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [17 <./figures/models/vif_final_model.png>]
-<figures/models/white_test.png, id=202, 421.575pt x 106.3975pt>
+<figures/models/white_test.png, id=203, 421.575pt x 106.3975pt>
 File: figures/models/white_test.png Graphic file (type png)
 <use figures/models/white_test.png>
 Package pdftex.def Info: figures/models/white_test.png  used on input line 227.
 (pdftex.def)             Requested size: 441.02646pt x 111.30667pt.
 
-Overfull \hbox (6.79936pt too wide) in paragraph at lines 239--240
+Overfull \hbox (6.79936pt too wide) in paragraph at lines 241--242
 []\T1/cmr/m/n/10 We can check for au-to-cor-re-la-tion by per-for-ming the \T1/cmr/bx/n/10 Breusch-Godfrey test\T1/cmr/m/n/10 . The hy-po-theses are, 
  []
 
 [18 <./figures/models/residuals_vs_fitted_response.png> <./figures/models/white_test.png>]
-<figures/models/Breusch-Godfrey_test.png, id=212, 674.52pt x 106.3975pt>
+<figures/models/Breusch-Godfrey_test.png, id=213, 674.52pt x 106.3975pt>
 File: figures/models/Breusch-Godfrey_test.png Graphic file (type png)
 <use figures/models/Breusch-Godfrey_test.png>
-Package pdftex.def Info: figures/models/Breusch-Godfrey_test.png  used on input line 247.
+Package pdftex.def Info: figures/models/Breusch-Godfrey_test.png  used on input line 249.
 (pdftex.def)             Requested size: 441.02647pt x 69.56667pt.
-<figures/models/normal-qq-plot.png, id=213, 702.625pt x 433.62pt>
+<figures/models/normal-qq-plot.png, id=214, 702.625pt x 433.62pt>
 File: figures/models/normal-qq-plot.png Graphic file (type png)
 <use figures/models/normal-qq-plot.png>
-Package pdftex.def Info: figures/models/normal-qq-plot.png  used on input line 260.
+Package pdftex.def Info: figures/models/normal-qq-plot.png  used on input line 262.
 (pdftex.def)             Requested size: 441.02647pt x 272.17633pt.
  [19 <./figures/models/Breusch-Godfrey_test.png> <./figures/models/normal-qq-plot.png>]
-<figures/models/jarque-bera_test.png, id=224, 403.5075pt x 106.3975pt>
+<figures/models/jarque-bera_test.png, id=225, 403.5075pt x 106.3975pt>
 File: figures/models/jarque-bera_test.png Graphic file (type png)
 <use figures/models/jarque-bera_test.png>
-Package pdftex.def Info: figures/models/jarque-bera_test.png  used on input line 282.
+Package pdftex.def Info: figures/models/jarque-bera_test.png  used on input line 284.
 (pdftex.def)             Requested size: 441.02124pt x 116.28917pt.
-) (./sections/coefficients.tex
-<figures/coefficients/coeff-model.png, id=225, 1334.9875pt x 658.46pt>
+
+
+LaTeX Warning: File `images/test_t_coefficients_robust_inference.PNG' not found on input line 301.
+
+
+./sections/model-selection.tex:301: Package pdftex.def Error: File `images/test_t_coefficients_robust_inference.PNG' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.301 ...test_t_coefficients_robust_inference.PNG}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 301.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [20 <./figures/models/jarque-bera_test.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 305--306
+
+ []
+
+[21]
+
+LaTeX Warning: File `images/linear_combination_of_coeff.PNG' not found on input line 325.
+
+
+./sections/model-selection.tex:325: Package pdftex.def Error: File `images/linear_combination_of_coeff.PNG' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.325 ...s{images/linear_combination_of_coeff.PNG}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[22]
+
+LaTeX Warning: File `images/wald_test_subset_coeff_zero.PNG' not found on input line 342.
+
+
+./sections/model-selection.tex:342: Package pdftex.def Error: File `images/wald_test_subset_coeff_zero.PNG' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.342 ...s{images/wald_test_subset_coeff_zero.PNG}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[23]) (./sections/coefficients.tex
+<figures/coefficients/coeff-model.png, id=251, 1334.9875pt x 658.46pt>
 File: figures/coefficients/coeff-model.png Graphic file (type png)
 <use figures/coefficients/coeff-model.png>
 Package pdftex.def Info: figures/coefficients/coeff-model.png  used on input line 5.
 (pdftex.def)             Requested size: 441.01576pt x 217.52356pt.
- [20 <./figures/models/jarque-bera_test.png> <./figures/coefficients/coeff-model.png>]
-<figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG, id=236, 534.798pt x 178.266pt>
-File: figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG Graphic file (type png)
-<use figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG>
-Package pdftex.def Info: figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG  used on input line 33.
-(pdftex.def)             Requested size: 441.02611pt x 147.00868pt.
-
+ [24]
+<figures/hypothesis_testing/test_t_coefficients_homoskedasticity.PNG, id=259, 540.8205pt x 175.25475pt>
+File: figures/hypothesis_testing/test_t_coefficients_homoskedasticity.PNG Graphic file (type png)
+<use figures/hypothesis_testing/test_t_coefficients_homoskedasticity.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/test_t_coefficients_homoskedasticity.PNG  used on input line 33.
+(pdftex.def)             Requested size: 441.0165pt x 142.9129pt.
+ [25 <./figures/coefficients/coeff-model.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 37--38
 
  []
 
-[21 <./figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG>]
-<figures/hypothesis_testing/linear_combination_of_coeff.PNG, id=244, 616.704pt x 180.07275pt>
-File: figures/hypothesis_testing/linear_combination_of_coeff.PNG Graphic file (type png)
-<use figures/hypothesis_testing/linear_combination_of_coeff.PNG>
-Package pdftex.def Info: figures/hypothesis_testing/linear_combination_of_coeff.PNG  used on input line 60.
-(pdftex.def)             Requested size: 441.0247pt x 128.77577pt.
-<figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG, id=245, 667.293pt x 146.949pt>
-File: figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG Graphic file (type png)
-<use figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG>
-Package pdftex.def Info: figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG  used on input line 77.
-(pdftex.def)             Requested size: 441.01547pt x 97.11893pt.
- [22 <./figures/hypothesis_testing/linear_combination_of_coeff.PNG>]) [23 <./figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG>] (./sections/appendix.tex) [24] (./lstat2120-project.aux)
+<figures/hypothesis_testing/linear_combination_of_coeff_homoskedasticity.PNG, id=268, 633.567pt x 151.16475pt>
+File: figures/hypothesis_testing/linear_combination_of_coeff_homoskedasticity.PNG Graphic file (type png)
+<use figures/hypothesis_testing/linear_combination_of_coeff_homoskedasticity.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/linear_combination_of_coeff_homoskedasticity.PNG  used on input line 60.
+(pdftex.def)             Requested size: 441.01901pt x 105.2241pt.
+[26 <./figures/hypothesis_testing/test_t_coefficients_homoskedasticity.PNG> <./figures/hypothesis_testing/linear_combination_of_coeff_homoskedasticity.PNG>]
+<figures/hypothesis_testing/wald_test_subset_coeff_zero_homoskedasticity.PNG, id=278, 668.4975pt x 144.54pt>
+File: figures/hypothesis_testing/wald_test_subset_coeff_zero_homoskedasticity.PNG Graphic file (type png)
+<use figures/hypothesis_testing/wald_test_subset_coeff_zero_homoskedasticity.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/wald_test_subset_coeff_zero_homoskedasticity.PNG  used on input line 77.
+(pdftex.def)             Requested size: 441.02611pt x 95.35698pt.
+) [27 <./figures/hypothesis_testing/wald_test_subset_coeff_zero_homoskedasticity.PNG>] (./sections/appendix.tex) [28] (./lstat2120-project.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -1478,18 +1521,18 @@ Package rerunfilecheck Info: Checksums for `lstat2120-project.out':
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 52928 strings out of 478268
- 1290523 string characters out of 5846347
- 1800729 words of memory out of 5000000
- 70104 multiletter control sequences out of 15000+600000
+ 53015 strings out of 478268
+ 1294145 string characters out of 5846347
+ 1800730 words of memory out of 5000000
+ 70174 multiletter control sequences out of 15000+600000
  491380 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,20n,108p,10667b,817s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbl1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsl1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti0900.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfxc0900.pfb>
-Output written on lstat2120-project.pdf (25 pages, 1602722 bytes).
+Output written on lstat2120-project.pdf (29 pages, 1617852 bytes).
 PDF statistics:
- 482 PDF objects out of 1000 (max. 8388607)
- 337 compressed objects within 4 object streams
- 92 named destinations out of 1000 (max. 500000)
- 358 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 370 compressed objects within 4 object streams
+ 103 named destinations out of 1000 (max. 500000)
+ 395 words of extra memory for PDF output out of 10000 (max. 10000000)
 
