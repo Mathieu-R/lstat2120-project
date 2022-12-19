@@ -62,8 +62,9 @@ library(tseries)
 # standardized (= studentized) deleted residuals
 library(MASS)
 
-# export summary to latex
-library(Hmisc)
+# robust inference
+library(lmtest)
+library(sandwich)
 ```
 
 ```{r}
@@ -111,8 +112,8 @@ df %>%
   gt %>%
   tab_header(
     title = "4 moments of quantitative variables"
-  ) %>%
-  gtsave("report/figures/eda/quantitative_variable_moments.png", expand = 10)
+  ) #%>%
+  #gtsave("report/figures/eda/quantitative_variable_moments.png", expand = 10)
 ```
 
 ```{r}
@@ -300,7 +301,7 @@ intercept_only <- lm(life.expectancy ~ 1, data = df_train)
 
 #### Cp Mallow
 ```{r}
-ols_step_all_possible(full_lm)
+#ols_step_all_possible(full_lm)
 ``` 
 
 #### Forward stepwise selection
@@ -343,8 +344,8 @@ model_selection_table <- rbind(full_model_summary, forward_p_value_summary, back
 gt(model_selection_table) %>%
   tab_header(
     title = "Comparison of models"
-  ) %>%
-  gtsave("report/figures/models/models.png")
+  ) #%>%
+  #gtsave("report/figures/models/models.png")
 ```
 
 ```{r}
@@ -377,8 +378,8 @@ interaction_table <- rbind(
 gt(interaction_table) %>%
   tab_header(
     title = "Comparison of the chosen model with the adding of interaction term"
-  ) %>%
-  gtsave("report/figures/models/models_interactions.png")
+  ) #%>%
+  #gtsave("report/figures/models/models_interactions.png")
 ```
 
 ```{r}
@@ -573,6 +574,7 @@ ols_plot_resid_fit(final_lm_bc)
 
 ```{r}
 bptest(final_lm_bc, data = df_train_final_model)
+ols_test_breusch_pagan(final_lm_bc)
 ```
 
 #### Autocorrelation
@@ -587,4 +589,19 @@ qqnorm(final_lm$residuals, pch = 1, frame = FALSE)
 qqline(final_lm$residuals, lwd = 2)
 
 jarque.bera.test(final_lm$residuals)
+```
+
+### Coefficients
+
+```{r}
+# heteroskedasticity => robust inference to trust standard errors
+coeff_robust <- coeftest(final_lm, vcov = vcovHC(final_lm, type = "HC0"))
+coeff_robust
+
+gt(coeff_robust) %>%
+  tab_header(
+    title = "Coefficients of the final model",
+    subtitle = "with robust inference for heteroskedasticity"
+  ) %>%
+  gtsave("report/figures/coefficients/coeff-model.png")
 ```

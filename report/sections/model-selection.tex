@@ -231,10 +231,8 @@ The result is,
 
 The p-value of the \textbf{White test} is $0.01729$. At a significance level of $\alpha = 0.05$, we reject the null hypothesis and therefore we can conclude there is \textbf{heterosckedasticity}.
 
-% TODO: taking remedial actions
-
-% box-cox does not resolve heterosckedastiscity
-We tried to make a Box-Cox transformation of the dependant variable but unfortunately, this did not fix the heterosckedasticity.
+Altough heteroskedasticity does not produce biased OLS estimators, it tends to make the variance-covariance matrix biased leading to standard error being untrustworthy.
+We first tried to fix the heteroskedasticity by making a Box-Cox transformation of the dependant variable but unfortunately, this did not work well. In order to rely on model testing methods such as F-tests or T-tests in the following sections, we will have to make \textbf{robust inference}.
 
 \subsubsection{Autocorrelation}
 
@@ -244,7 +242,6 @@ We can check for autocorrelation by performing the \textbf{Breusch-Godfrey test}
 	H_1&: \text{there is autocorrelation}
 \end{align*}
 
-% TODO: show output of the Breusch-Godfrey test
 \begin{figure}[H]
 	\centering
 	\includegraphics{figures/models/Breusch-Godfrey_test.png}

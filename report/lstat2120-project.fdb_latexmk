@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1670947513 "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" "lstat2120-project.pdf" "lstat2120-project" 1670947513
+["pdflatex"] 1671376668 "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" "lstat2120-project.pdf" "lstat2120-project" 1671376668
   "../header.tex" 1669632843 4964 da330464b9dda5fde8ef65a3b0bc81f2 ""
   "../preamble.tex" 1669639677 289 13f49ed58259799bfd7aec72b9b243a7 ""
-  "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" 1670229964 417 b3e2870f405cf8fdafe3c0773073ae9e ""
+  "/Users/mathieu/Lab/life-expectancy-linear-model/report/lstat2120-project.tex" 1671374766 451 165624258f4b963f9704db612a7da270 ""
   "/dev/null" 0 -1 0 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -353,6 +353,7 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1653114964 2826437 0068b8da7e1876b9f00b45650024546e ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
+  "figures/coefficients/coeff-model.png" 1671374870 153725 7508a98c72e1732569621f026f7f5ea7 ""
   "figures/eda/boxplot_economic_features.png" 1670925019 34728 3cc95e3b6adfb0eb71db1e9b3c609481 ""
   "figures/eda/boxplot_health_features.png" 1670925544 26919 015d98dcfe2a8c0c45fcebc0e476ba99 ""
   "figures/eda/boxplot_mortality_features.png" 1670925369 29320 cb8d599292bba73388d2276fd1903255 ""
@@ -379,14 +380,15 @@
   "figures/models/residuals_vs_fitted_response.png" 1670940447 37105 aa0c87e67e4013e121fe5aa96e668ae7 ""
   "figures/models/vif_final_model.png" 1670939406 71182 8deb37228c5d11d43b578415f2e13414 ""
   "figures/models/white_test.png" 1670941883 9975 fd864ffbdb8fcd05d0b0b8efffcaf51f ""
-  "lstat2120-project.aux" 1670947513 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "lstat2120-project.aux" 1671376668 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "lstat2120-project.out" 0 -1 0 "pdflatex"
-  "lstat2120-project.tex" 1670229964 417 b3e2870f405cf8fdafe3c0773073ae9e ""
+  "lstat2120-project.tex" 1671374766 451 165624258f4b963f9704db612a7da270 ""
   "sections/appendix.tex" 1670939364 2241 bdf6d0c2485c0f33e4d6d3122bf69160 ""
+  "sections/coefficients.tex" 1671376628 1032 078dc8a681d72bca06f62a57590bf9ad ""
   "sections/cover-page.tex" 1670229966 496 fea66292d34b73c5a86f8d9035e9ab77 ""
   "sections/eda.tex" 1670939841 6284 0501fa49d15c8fbc066a8f37b80f9760 ""
   "sections/intro.tex" 1669991049 1653 003b3c7b3a19edb4a6052415f907bfd0 ""
-  "sections/model-selection.tex" 1670947505 14579 e29ccac551cda1b8324691d0824ca596 ""
+  "sections/model-selection.tex" 1671009893 14783 c5d8de1235d888a358e787c175942ccf ""
   (generated)
   "lstat2120-project.aux"
   "lstat2120-project.log"

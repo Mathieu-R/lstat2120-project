@@ -1920,6 +1920,15 @@ INPUT ./figures/models/jarque-bera_test.png
 INPUT figures/models/jarque-bera_test.png
 INPUT ./figures/models/jarque-bera_test.png
 INPUT ./figures/models/jarque-bera_test.png
+INPUT ./sections/coefficients.tex
+INPUT sections/coefficients.tex
+INPUT ./sections/coefficients.tex
+INPUT sections/coefficients.tex
+INPUT ./figures/coefficients/coeff-model.png
+INPUT ./figures/coefficients/coeff-model.png
+INPUT figures/coefficients/coeff-model.png
+INPUT ./figures/coefficients/coeff-model.png
+INPUT ./figures/coefficients/coeff-model.png
 INPUT ./sections/appendix.tex
 INPUT sections/appendix.tex
 INPUT ./sections/appendix.tex
