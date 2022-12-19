@@ -12,7 +12,7 @@ The \textit{alcohol} variable is the consumption of alcohol per capita (of $15$ 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/eda/histogram_qualitative_variables.png}
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_qualitative_variables.png}
 	\caption{barplot of the qualitative variables}
 	\label{fig:qualitative_variables_barplot}
 \end{figure}
@@ -23,12 +23,12 @@ Let's take a look to the table of the 4 moments (\textit{mean}, \textit{standard
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/eda/quantitative_variables_moments.png}
+	\includegraphics[width=0.5\textwidth]{figures/eda/quantitative_variables_moments.png}
 	\caption{table of moments (mean, standard deviation, skewness, kurtosis) for the quantitative variables}
 	\label{fig:quantitative_variables_moments}
 \end{figure}
 
-The \textbf{life expectancy} has a mean of roughly $70$ years with a standard deviation of $8.6$. It is slightly negatively skewed which indicates that some countries have low life expectancy. The kurtosis is less than $3$ so the distribution is a litlle bit flattened.
+We will not describe every variable in details since there are a lot but we will try to summarize the above table instead.
 
 % TARGET
 
@@ -39,71 +39,11 @@ The \textbf{life expectancy} has a mean of roughly $70$ years with a standard de
 	\label{fig:histogram_boxplot_target}
 \end{figure}
 
-% ECONOMIC
+The \textbf{life expectancy} has a mean of roughly $70$ years with a standard deviation of $8.6$. It is slightly negatively skewed which indicates that some countries have low life expectancy. The kurtosis is less than $3$ so the distribution is a litlle bit flattened.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/histogram_economic_features.png}
-	\caption{Histogram of economic features}
-	\label{fig:histogram_economic_features}
-\end{figure}
+We can see that some features have a high standard deviation. For example, the \textbf{infant.deaths} variable has a mean of $\approx 31 / 1000$ but a standard diviation of $112.6$ which means that some countries have far more child mortality than others. We also see that the expenditure on health services, the number of measles cases per 1000 inhabitants and the GDP are not homogeneous among the different countries represented in this dataset. The hepatitis B, polio and diphetria coverages are pretty much similar. The average BMI is $38$ which means obesity but we have to pay attention that the standard deviation is pretty high so we cannot intepret that in average the countries have an obese population. The number of years of schooling last $12 \pm 2$ years in average. The prevalence of thinness among children and adolescents is of $4\%$ in average but can be close to $0$ considering the standard deviation. Checking the \textbf{income.composition.of.resources} variable, we notice that based on the productive resources, the countries have an HDI greater than $0.5$.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/boxplot_economic_features.png}
-	\caption{Boxplot of economic features}
-	\label{fig:boxplot_economic_features}
-\end{figure}
-
-% SOCIAL
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/histogram_boxplot_social_features.png}
-	\caption{Histogram and boxplot of social features}
-	\label{fig:histogram_boxplot_social_features}
-\end{figure}
-
-% MORTALITY
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/histogram_mortality_features.png}
-	\caption{Histogram of mortality features}
-	\label{fig:histogram_mortality_features}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/boxplot_mortality_features.png}
-	\caption{Boxplot of mortality features}
-	\label{fig:boxplot_mortality_features}
-\end{figure}
-
-% HEALTH
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/histogram_health_features.png}
-	\caption{Histogram of health features}
-	\label{fig:histogram_health_features}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/boxplot_health_features.png}
-	\caption{Boxplot of health features}
-	\label{fig:boxplot_health_features}
-\end{figure}
-
-% OTHER
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{figures/eda/histogram_boxplot_misc_features.png}
-	\caption{Histogram and boxplot of misc features}
-	\label{fig:histogram_boxplot_misc_features}
-\end{figure}
+Looking at the histograms and boxplots in the appendix, we can see that some countries spend far more money on health services than most of the others. we notice that the child (less than five years old) death and the number of measle cases are low among most of countries. Unfortunately, a group of countries have not a good coverage against polio, hepatitis B and diphteria. Eventually, we notice 2 groups for the BMI, a group of countries has a BMI around 20 but another around 60 !
 
 
 The \textbf{infant death} has a mean of $31 / 1000$ but has a huge standard deviation ($112.6$). We see that heavily tailed with a kurtosis of $66.9$. The same kind of conclusion can be made for the \textbf{deaths under five year old}.

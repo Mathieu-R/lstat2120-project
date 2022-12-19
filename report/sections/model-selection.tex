@@ -44,7 +44,7 @@ This change allows some coefficients to be shrunk exactly to zero.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/models.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/models.png}
 	\caption{Comparison of the full model with models resulting of forward/backward selections using p-value and AIC criterion}
 	\label{fig:models}
 \end{figure}
@@ -65,7 +65,7 @@ We should then try to add interactions betweem variables to our chosen model. We
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/models_interactions.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/models_interactions.png}
 	\caption{Comparison of the chosen model with the adding of an interaction term}
 	\label{fig:models_interaction}
 \end{figure}
@@ -126,7 +126,7 @@ We find that $\textbf{8}$ observations are influentials for the fitted values: $
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/dffits.png}
+	\includegraphics[width=0.7\textwidth]{figures/models/dffits.png}
 	\caption{Plot of DFFITS vs observations. Outside the two red lines are the outliers influentials for their fitted values.}
 	\label{fig:dffits}
 \end{figure}
@@ -143,15 +143,15 @@ We have a criterion for DFBETAS. The i-th observation is influential for the k-t
 In the following plots, you can have a look at the differents outliers for each coefficient
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/dfbetas_1.png}
-	\caption{Plot of DFFITS vs observations. Outside the two red lines are the outliers influentials for the respective variable.}
+	\includegraphics[width=0.5\textwidth]{figures/models/dfbetas_1.png}
+	\caption{Plots of DFFITS vs observations. Outside the two red lines are the outliers influentials for the respective variable.}
 	\label{fig:dfbetas1}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/dfbetas_2.png}
-	\caption{}
+	\includegraphics[width=0.5\textwidth]{figures/models/dfbetas_2.png}
+	\caption{Plots of DFFITS vs observations. Outside the two red lines are the outliers influentials for the respective variable.}
 	\label{fig:dfbetas2}
 \end{figure}
 
@@ -159,7 +159,7 @@ To summarize this, let's have a look at the Cook's distance $D_i$.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/cooks.png}
+	\includegraphics[width=0.7\textwidth]{figures/models/cooks.png}
 	\caption{Cook's distance. Outside the red lines are the outliers influentials for the regression coefficients.}
 	\label{fig:cooks_distance}
 \end{figure}
@@ -196,7 +196,7 @@ We have multicollinearity problem if the \textbf{VIF} is greater than $10$ and i
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/vif_final_model.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/vif_final_model.png}
 	\caption{VIF for the selected model}
 	\label{fig:vif_final_model}
 \end{figure}
@@ -209,7 +209,7 @@ We can try to check for heteroskedasticity by looking at the plot of the residua
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/residuals_vs_fitted_response.png}
+	\includegraphics[width=0.7\textwidth]{figures/models/residuals_vs_fitted_response.png}
 	\caption{scatterplots of residuals versus fitted response variable}
 	\label{fig:residuals_vs_fitted_response}
 \end{figure}
@@ -224,7 +224,7 @@ However, it's not that clear with plot if there is heteroskedasticity problem or
 The result is,
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/white_test.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/white_test.png}
 	\caption{Result of White test for homoskedastiscity}
 	\label{fig:white_test}
 \end{figure}
@@ -246,7 +246,7 @@ We can check for autocorrelation by performing the \textbf{Breusch-Godfrey test}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/Breusch-Godfrey_test.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/Breusch-Godfrey_test.png}
 	\caption{Result of Breusch-Godfrey test for autocorrelation}
 	\label{fig:breusch-godfrey-test}
 \end{figure}
@@ -259,7 +259,7 @@ Considering the Normal Q-Q plot of the residuals comparing the quantiles of the 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/normal-qq-plot.png}
+	\includegraphics[width=0.7\textwidth]{figures/models/normal-qq-plot.png}
 	\caption{Normal QQ-plot}
 	\label{fig:normal-qq-plot}
 \end{figure}
@@ -281,70 +281,9 @@ The hypothesis are,
 
 \begin{figure}[H]
 	\centering
-	\includegraphics{figures/models/jarque-bera_test.png}
+	\includegraphics[width=0.5\textwidth]{figures/models/jarque-bera_test.png}
 	\caption{Result of Jarque-Bera test}
 	\label{fig:jarque-bera-test}
 \end{figure}
 
-The p-value of the \textbf{Jarque Bera test} is $0.042$. At a significance level of $\alpha = 0.05$, we fail to reject the null hypothesis and therefore we can conclude the \textbf{residuals are normaly distributed}. 
-
-\section{Significance of estimated coefficients}
-
-We perform t-tests of estimated coefficients in order to test their significance. For t-tests, we use the following null and alternative hypotheses for each regression coefficient: 
-\begin{align*}
-	H_0&: \beta_i = 0 \\
-	H_1&: \beta_i \neq 0
-\end{align*}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{images/test_t_coefficients_robust_inference.PNG}
-	\caption{Output of t-test of coefficients}
-\end{figure}
-
-On the basis of the p-values, we can reject the null hypothesis for all the coefficients. We can conclude that all the coefficients are statistically significant at a level of significance of 10\%. At a significance level of 5\%, the “total expenditure” coefficient is no longer statistically significant. \\
-
-On the basis of the estimates, we can say that the effect of low and middle adult mortality rates on life expectancy are positive while the effect of a very high adult mortality rate on life expectancy is negative and stronger. From the regression output, we see that the estimate of the regression coefficient for “Adult mortality very high” is -5.007. This signifies that on average, a country with a very high adult mortality rate has a life expectancy of 5 years less. On the contrary, a country with a low  adult mortality rate has a life expectancy higher of 3 years on average and 2 years for a country with a moderate adult mortality rate. 
-
-\section{Linear combination  of coefficients}
-
- We want to test the hypothesis that there exists a linear combination between two regression coefficients: \begin{equation*}
-     \beta_4 = \beta_5
- \end{equation*} 
- With this, we want to test if these two coefficients are equal. We can also write it as follow: \begin{equation*}
-     \beta_4 - \beta_5 = 0
- \end{equation*}
-We formulate the null and alternative hypotheses : 
-\begin{align*}
-	H_0&: \beta_4 - \beta_5 = 0 \\
-	H_1&: \beta_4 - \beta_5 \neq 0
-\end{align*}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{images/linear_combination_of_coeff.PNG}
-	\caption{Output of linear combination test}
-\end{figure}
-
-Since the p-value (0.101) is larger than the significance level of 0.05, we fail to reject the null hypothesis that these two regression coefficients are equal. This signifies that a country with a low adult mortality rate and a country with a moderate adult mortality rate could have the same reduction in years of life expectancy if all the other effects remain constant. 
-
-\section{Coefficients equal to zero}
-
-We test a subset of coefficients equal to zero. In this case, we test the coefficients corresponding to all qualitative variables equal to zero. Hence, the null and alternative hypotheses are the following :
-
-\begin{align*}
-	H_0&: \beta_4 = \beta_5 = \beta_6 = 0 \\
-	H_1&: \text{at least one of these is not equal to zero}
-\end{align*}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics{images/wald_test_subset_coeff_zero.PNG}
-	\caption{Output of Wald test}
-\end{figure}
-
-The p-value is 0.0025 which is below the significance level of 0.05. We can thus reject the null hypothesis. We can conclude that there is sufficient statistical evidence that the different categorial variables corresponding to adult mortality rates explain life expectancy. 
-
-\section{Prediction interval}
-
-We calculate a 95\% prediction interval for the 26 observations excluded from the dataset in the beginning. We conclude that almost all the intervals cover the excluded observations. The last observation of the test dataset is the only one not covered by the corresponding 95\% prediction interval. However, if we take the 99\% prediction interval, this observation is contained in the prediction interval.
+The p-value of the \textbf{Jarque Bera test} is $0.042$. At a significance level of $\alpha = 0.05$, we fail to reject the null hypothesis and therefore we can conclude the \textbf{residuals are normaly distributed}.

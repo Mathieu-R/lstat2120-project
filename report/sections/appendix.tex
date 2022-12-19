@@ -1,5 +1,7 @@
 \section*{Appendix}
 
+\subsection*{Description of the different variables}
+
 The \textbf{response variable} is \textit{life.expectancy}.
 
 The \textbf{explanatory variables} are the following:
@@ -25,8 +27,8 @@ Mortality factors :
 	\item \textit{under.five.deaths}: number of under five deaths per $1000$ population.
 	\item \textit{infant.deaths}: number of infant deaths per $1000$ population.
 	\item \textit{hiv.aids}: death per 1000 live births HIV/AIDS (between 0 and 4 years old).
-	\item \textit{thinness.5.9.years}: prevalence of thinness among children for age $5$ to $9$ years old.
-	\item \textit{thinness.10.19.years}: prevalence of thinness among children and adolescents for age $10$ to $19$ years old.
+	\item \textit{thinness.5.9.years}: prevalence of thinness among children for age $5$ to $9$ years old (\%).
+	\item \textit{thinness.10.19.years}: prevalence of thinness among children and adolescents for age $10$ to $19$ years old (\%).
 \end{itemize}
 
 Immunization factors
@@ -42,3 +44,71 @@ Other factors
 	\item \textit{alcohol}: consumption of alcohol ($15$ years old or more) per capita (\textbf{in litres of pure alcohol}).
 	\item \textit{bmi}: average BMI of entire population.
 \end{itemize}
+
+\subsection*{Histograms and boxplots of the explanatory variables}
+
+% ECONOMIC
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_economic_features.png}
+	\caption{Histogram of economic features}
+	\label{fig:histogram_economic_features}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/boxplot_economic_features.png}
+	\caption{Boxplot of economic features}
+	\label{fig:boxplot_economic_features}
+\end{figure}
+
+% SOCIAL
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_boxplot_social_features.png}
+	\caption{Histogram and boxplot of social features}
+	\label{fig:histogram_boxplot_social_features}
+\end{figure}
+
+% MORTALITY
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_mortality_features.png}
+	\caption{Histogram of mortality features}
+	\label{fig:histogram_mortality_features}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/boxplot_mortality_features.png}
+	\caption{Boxplot of mortality features}
+	\label{fig:boxplot_mortality_features}
+\end{figure}
+
+% HEALTH
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_health_features.png}
+	\caption{Histogram of health features}
+	\label{fig:histogram_health_features}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/boxplot_health_features.png}
+	\caption{Boxplot of health features}
+	\label{fig:boxplot_health_features}
+\end{figure}
+
+% OTHER
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/eda/histogram_boxplot_misc_features.png}
+	\caption{Histogram and boxplot of misc features}
+	\label{fig:histogram_boxplot_misc_features}
+\end{figure}
