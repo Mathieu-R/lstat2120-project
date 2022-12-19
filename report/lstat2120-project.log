@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.21)  18 DEC 2022 16:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.5.21)  19 DEC 2022 04:50
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1442,7 +1442,29 @@ File: figures/coefficients/coeff-model.png Graphic file (type png)
 <use figures/coefficients/coeff-model.png>
 Package pdftex.def Info: figures/coefficients/coeff-model.png  used on input line 5.
 (pdftex.def)             Requested size: 441.01576pt x 217.52356pt.
- [20 <./figures/models/jarque-bera_test.png> <./figures/coefficients/coeff-model.png>]) [21] (./sections/appendix.tex) [22] (./lstat2120-project.aux)
+ [20 <./figures/models/jarque-bera_test.png> <./figures/coefficients/coeff-model.png>]
+<figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG, id=236, 534.798pt x 178.266pt>
+File: figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG Graphic file (type png)
+<use figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG  used on input line 33.
+(pdftex.def)             Requested size: 441.02611pt x 147.00868pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
+
+ []
+
+[21 <./figures/hypothesis_testing/test_t_coefficients_robust_inference.PNG>]
+<figures/hypothesis_testing/linear_combination_of_coeff.PNG, id=244, 616.704pt x 180.07275pt>
+File: figures/hypothesis_testing/linear_combination_of_coeff.PNG Graphic file (type png)
+<use figures/hypothesis_testing/linear_combination_of_coeff.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/linear_combination_of_coeff.PNG  used on input line 60.
+(pdftex.def)             Requested size: 441.0247pt x 128.77577pt.
+<figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG, id=245, 667.293pt x 146.949pt>
+File: figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG Graphic file (type png)
+<use figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG>
+Package pdftex.def Info: figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG  used on input line 77.
+(pdftex.def)             Requested size: 441.01547pt x 97.11893pt.
+ [22 <./figures/hypothesis_testing/linear_combination_of_coeff.PNG>]) [23 <./figures/hypothesis_testing/wald_test_subset_coeff_zero.PNG>] (./sections/appendix.tex) [24] (./lstat2120-project.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
@@ -1456,18 +1478,18 @@ Package rerunfilecheck Info: Checksums for `lstat2120-project.out':
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 52893 strings out of 478268
- 1289078 string characters out of 5846347
- 1800730 words of memory out of 5000000
- 70082 multiletter control sequences out of 15000+600000
+ 52928 strings out of 478268
+ 1290523 string characters out of 5846347
+ 1800729 words of memory out of 5000000
+ 70104 multiletter control sequences out of 15000+600000
  491380 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,20n,108p,10667b,817s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbl1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsl1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti0900.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfxc0900.pfb>
-Output written on lstat2120-project.pdf (23 pages, 1543124 bytes).
+Output written on lstat2120-project.pdf (25 pages, 1602722 bytes).
 PDF statistics:
- 446 PDF objects out of 1000 (max. 8388607)
- 309 compressed objects within 4 object streams
- 83 named destinations out of 1000 (max. 500000)
- 311 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 482 PDF objects out of 1000 (max. 8388607)
+ 337 compressed objects within 4 object streams
+ 92 named destinations out of 1000 (max. 500000)
+ 358 words of extra memory for PDF output out of 10000 (max. 10000000)
 
