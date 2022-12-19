@@ -215,9 +215,9 @@ We can try to check for heteroskedasticity by looking at the plot of the residua
 \end{figure}
 
 
-However, it's not that clear with plot if there is heterosckedasticity problem or not. The best way to determinate if there is heteroskedasticity is to perform the \textbf{White test}. The hypothesis are,
+However, it's not that clear with plot if there is heteroskedasticity problem or not. The best way to determinate if there is heteroskedasticity is to perform the \textbf{White test}. The hypothesis are,
 \begin{align*}
-	H_0&: \text{there is homoscedasticity} \\
+	H_0&: \text{there is homoskedasticity} \\
 	H_1&: \text{there is heteroskedasticity}
 \end{align*}
 
@@ -225,16 +225,16 @@ The result is,
 \begin{figure}[H]
 	\centering
 	\includegraphics{figures/models/white_test.png}
-	\caption{Result of White test for homoeskedastiscity}
+	\caption{Result of White test for homoskedastiscity}
 	\label{fig:white_test}
 \end{figure}
 
-The p-value of the \textbf{White test} is $0.01729$. At a significance level of $\alpha = 0.05$, we reject the null hypothesis and therefore we can conclude there is \textbf{heterosckedasticity}.
+The p-value of the \textbf{White test} is $0.1034$. At a significance level of $\alpha = 0.05$, we can not reject the null hypothesis and therefore we can conclude that there is no\textbf{heteroskedasticity}.
 
 % TODO: taking remedial actions
 
-% box-cox does not resolve heterosckedastiscity
-We tried to make a Box-Cox transformation of the dependant variable but unfortunately, this did not fix the heterosckedasticity.
+% box-cox does not resolve heteroskedastiscity
+% We tried to make a Box-Cox transformation of the dependant variable but unfortunately, this did not fix the heteroskedasticity.
 
 \subsubsection{Autocorrelation}
 
